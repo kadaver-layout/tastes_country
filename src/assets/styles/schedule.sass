@@ -1,0 +1,133 @@
+@use "_vars" as *
+
+.featured-fairs
+  padding-block: 60px 20px
+  &__list
+    display: flex
+    gap: 20px
+    overflow-x: auto
+    scrollbar-width: none
+    &::-webkit-scrollbar
+      display: none
+  &__nav
+    justify-content: center
+    margin-top: 32px
+    @media ($desktop)
+      display: none
+
+.fair-card--featured
+  flex-basis: 910px
+  @media ($tablet)
+    flex-basis: 480px
+  @media ($mobile)
+    flex-basis: 300px
+  .fair-card__photo
+    height: 420px
+    @media ($tablet)
+      height: 260px
+    @media ($mobile)
+      height: 180px
+  .button--lime
+    background: $green
+    color: $cream
+    &:hover
+      background: $green-nav
+
+.schedule
+  padding-block: 60px
+  @media ($mobile)
+    padding-block: 32px
+  &__title
+    max-width: 820px
+    margin-bottom: 40px
+  &__card
+    padding: 60px
+    border-radius: 20px
+    background: $cream
+    @media ($tablet)
+      padding: 32px
+    @media ($mobile)
+      padding: 20px
+      border-radius: 10px
+  &__header, &__row
+    display: grid
+    grid-template-columns: 600px repeat(7, 1fr)
+    gap: 8px
+    align-items: center
+    @media ($tablet)
+      grid-template-columns: 240px repeat(7, 1fr)
+    @media ($mobile)
+      grid-template-columns: 1fr
+  &__month
+    font-size: 24px
+    line-height: 30px
+    letter-spacing: -0.02em
+    color: $green-muted
+    @media ($mobile)
+      margin-bottom: 12px
+  &__days
+    display: contents
+    @media ($mobile)
+      display: grid
+      grid-template-columns: repeat(7, 1fr)
+      gap: 8px
+      margin-bottom: 16px
+  &__day
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 44px
+    border-radius: 8px
+    font-size: 20px
+    line-height: 29px
+    letter-spacing: -0.02em
+    color: $green-muted
+    &--today
+      background: $green
+      color: $cream
+  &__rows
+    display: grid
+    gap: 24px
+    margin-top: 32px
+  &__row
+    @media ($mobile)
+      gap: 12px
+      padding-block: 16px
+      border-top: 1px solid $cream-deep
+  &__fair
+    display: grid
+    gap: 8px
+    padding-right: 24px
+  &__address
+    font-size: 24px
+    line-height: 30px
+    letter-spacing: -0.02em
+    color: $green-muted
+    @media ($tablet)
+      font-size: 16px
+      line-height: 22.4px
+  &__dates
+    font-size: 24px
+    line-height: 30px
+    letter-spacing: -0.02em
+    @media ($tablet)
+      font-size: 16px
+      line-height: 22.4px
+  &__cells
+    display: contents
+    @media ($mobile)
+      display: grid
+      grid-template-columns: repeat(7, 1fr)
+      gap: 8px
+  &__cell
+    height: 24px
+    border-radius: 6px
+    background: $cream-page
+    &--active
+      background: $lime
+  &__nav
+    justify-content: space-between
+    width: 324px
+    margin: 40px auto 0
+    @media ($mobile)
+      width: 200px

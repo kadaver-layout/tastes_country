@@ -1,0 +1,76 @@
+@use "_vars" as *
+
+.values
+  padding-block: 80px 100px
+  @media ($mobile)
+    padding-block: 48px 64px
+  &__intro
+    display: grid
+    gap: 24px
+    max-width: 920px
+    margin-bottom: 48px
+  &__list
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    gap: 20px
+    align-items: start
+    @media ($tablet)
+      grid-template-columns: 1fr
+  &__card
+    transform: none
+    @media ($tablet)
+      transform: none
+
+.faq
+  padding-block: 80px
+  @media ($mobile)
+    padding-block: 48px
+  &__title
+    margin-bottom: 40px
+  &__list
+    display: grid
+    gap: 12px
+  &__details
+    border-radius: 20px
+    background: $cream
+    padding: 32px 40px
+    @media ($mobile)
+      padding: 20px
+      border-radius: 10px
+  &__question
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 24px
+    cursor: pointer
+    font-weight: 500
+    font-size: 36px
+    line-height: 37.8px
+    letter-spacing: -0.03em
+    list-style: none
+    &::-webkit-details-marker
+      display: none
+    &::after
+      content: "+"
+      flex-shrink: 0
+      font-size: 32px
+      line-height: 1
+      color: $green-mid
+    @media ($tablet)
+      font-size: 24px
+      line-height: 26.4px
+    @media ($mobile)
+      font-size: 20px
+      line-height: 24px
+  &__details[open] &__question::after
+    content: "−"
+  &__answer
+    margin-top: 16px
+    max-width: 1200px
+    font-size: 24px
+    line-height: 30px
+    letter-spacing: -0.02em
+    color: $green-muted
+    @media ($mobile)
+      font-size: 16px
+      line-height: 22.4px

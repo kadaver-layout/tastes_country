@@ -1,0 +1,27 @@
+<section class="gallery">
+  <div class="container gallery__container">
+    <div class="gallery__intro">
+      <h2 class="section-title gallery__title">{{ galleryIntro.title }}</h2>
+      <p class="lead gallery__lead">{{ galleryIntro.lead }}</p>
+      <p class="lead gallery__lead">{{ galleryIntro.lead2 }}</p>
+    </div>
+    <div class="gallery__rail" data-rail data-rail-mode="slide">
+      <ul class="gallery__list" data-rail-track>
+        {% for photo in gallery.photos %}
+        <li class="gallery__item">
+          <img src="assets/img/{{ photo }}.webp" alt="Посетители и витрины ярмарки «Вкусы страны»">
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="rail-nav gallery__nav">
+        <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущее фото">
+          <img src="assets/img/arrow-left.svg" alt="">
+        </button>
+        <button class="rail-button" type="button" data-rail-next aria-label="Следующее фото">
+          <img src="assets/img/arrow-right.svg" alt="">
+        </button>
+      </div>
+    </div>
+    <img class="gallery__sticker" src="assets/img/{{ gallery.sticker }}.webp" alt="" width="250" height="167">
+  </div>
+</section>

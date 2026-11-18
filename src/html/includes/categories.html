@@ -1,0 +1,15 @@
+<section class="categories">
+  <div class="container">
+    <h2 class="visually-hidden">Категории продукции</h2>
+    <ul class="categories__list">
+      {% for category in categories %}
+      <li class="categories__item">
+        <a class="category-card" href="{{ category.url }}">
+          <h3 class="card-title category-card__title">{{ category.title }}</h3>
+          <img class="category-card__photo" src="assets/img/{{ category.photo }}.webp" alt="">
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

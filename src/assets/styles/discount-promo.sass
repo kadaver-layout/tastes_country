@@ -1,0 +1,65 @@
+@use "_vars" as *
+
+.promo
+  position: relative
+  padding-block: 120px
+  overflow: hidden
+  @media ($tablet)
+    padding-block: 80px
+  @media ($mobile)
+    padding-block: 56px
+  &__container
+    position: relative
+  &__pattern
+    position: absolute
+    top: -280px
+    left: 50%
+    width: 1590px
+    max-width: none
+    transform: translateX(-50%)
+    pointer-events: none
+    @media ($tablet)
+      top: -160px
+      width: 1000px
+    @media ($mobile)
+      top: -100px
+      width: 590px
+  &__content
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 24px
+    max-width: 770px
+    margin-inline: auto
+    text-align: center
+  &__lead
+    max-width: 560px
+  &__button
+    margin-top: 16px
+  &__sticker
+    position: absolute
+    pointer-events: none
+    &--discount
+      top: 45%
+      left: 40px
+      width: 190px
+      @media ($tablet)
+        left: 0
+        width: 120px
+      @media ($mobile)
+        top: 0
+        left: 0
+        width: 86px
+    &--promocode
+      top: 50%
+      right: 40px
+      width: 320px
+      @media ($tablet)
+        right: 0
+        width: 210px
+      @media ($mobile)
+        top: auto
+        bottom: 0
+        right: 0
+        width: 151px

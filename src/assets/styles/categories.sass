@@ -1,0 +1,65 @@
+@use "_vars" as *
+
+.categories
+  padding-block: 40px
+  &__list
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    gap: 20px
+    @media ($tablet)
+      grid-template-columns: 1fr 1fr
+    @media ($mobile)
+      grid-template-columns: 1fr
+  &__item
+    min-width: 0
+
+.category-card
+  position: relative
+  display: block
+  height: 300px
+  border-radius: 20px
+  background: $cream
+  overflow: hidden
+  @media ($tablet)
+    height: 200px
+    border-radius: 12px
+  @media ($mobile)
+    height: 160px
+    border-radius: 10px
+  &__title
+    position: absolute
+    left: 32px
+    bottom: 32px
+    z-index: 1
+    max-width: 250px
+    @media ($tablet)
+      left: 24px
+      bottom: 24px
+      font-size: 24px
+      line-height: 26.4px
+    @media ($mobile)
+      left: 20px
+      bottom: 20px
+      max-width: 160px
+      font-size: 20px
+      line-height: 24px
+  &__photo
+    position: absolute
+    top: -30px
+    right: -30px
+    height: calc(100% + 60px)
+    width: auto
+    max-width: none
+    @media ($mobile)
+      top: -20px
+      right: -20px
+      height: calc(100% + 40px)
+  // Повороты вырезок как в макете.
+  .categories__item:nth-child(1) &__photo
+    transform: rotate(2.7deg)
+  .categories__item:nth-child(3) &__photo
+    transform: rotate(2.1deg)
+  .categories__item:nth-child(4) &__photo
+    transform: rotate(1.9deg)
+  .categories__item:nth-child(6) &__photo
+    transform: rotate(2.5deg)

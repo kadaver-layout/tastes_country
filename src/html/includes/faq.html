@@ -1,0 +1,15 @@
+<section class="faq">
+  <div class="container">
+    <h2 class="section-title faq__title">{{ faqTitle | default("Вопросы и ответы") }}</h2>
+    <ul class="faq__list">
+      {% for item in faq %}
+      <li class="faq__item">
+        <details class="faq__details" {% if loop.first %}open{% endif %}>
+          <summary class="faq__question">{{ item.q }}</summary>
+          <p class="faq__answer">{{ item.a }}</p>
+        </details>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

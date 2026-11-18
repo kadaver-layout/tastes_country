@@ -1,0 +1,82 @@
+@use "_vars" as *
+
+// Шапка лежит поверх зелёного hero каждой страницы.
+.header
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  z-index: 20
+  padding-top: 40px
+  @media ($tablet)
+    padding-top: 20px
+  &__container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 24px
+  &__brand
+    display: flex
+    align-items: center
+    gap: 60px
+    @media ($tablet)
+      gap: 24px
+    @media ($mobile)
+      gap: 16px
+  &__logo
+    flex-shrink: 0
+    img
+      width: 152px
+      height: 70px
+      @media ($tablet)
+        width: 120px
+        height: 55px
+      @media ($mobile)
+        width: 90px
+        height: 42px
+  &__city
+    display: inline-flex
+    align-items: center
+    gap: 8px
+    font-size: 18px
+    line-height: 23.4px
+    letter-spacing: -0.02em
+    color: $green-light
+    img
+      flex-shrink: 0
+      width: 24px
+      height: 24px
+    @media ($mobile)
+      font-size: 16px
+      line-height: 18.2px
+      img
+        width: 20px
+        height: 20px
+  &__nav
+    padding: 23px 24px
+    border-radius: 12px
+    background: $green-nav
+    @media ($tablet)
+      display: none
+  &__nav-list
+    display: flex
+    align-items: center
+    gap: 36px
+  &__nav-link
+    font-size: 18px
+    line-height: 23.4px
+    letter-spacing: -0.02em
+    color: $green-light
+  &__phone
+    @media ($tablet)
+      display: none
+  &__burger
+    display: none
+    align-items: center
+    justify-content: center
+    width: 40px
+    height: 40px
+    border-radius: 4px
+    background: $cream
+    @media ($tablet)
+      display: inline-flex

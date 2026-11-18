@@ -1,0 +1,28 @@
+<section class="videos">
+  <div class="container videos__intro">
+    <h2 class="section-title videos__title">{{ videos.title }}</h2>
+    <p class="lead videos__lead">{{ videos.lead }}</p>
+  </div>
+  <div class="videos__rail" data-rail>
+    <ul class="videos__list" data-rail-track>
+      {% for card in videos.cards %}
+      <li class="videos__item">
+        <button class="video-card" type="button" data-video-card aria-label="Видео о ярмарке{% if card.city %}, {{ card.city }}{% endif %}">
+          <img class="video-card__poster" src="assets/img/{{ card.poster }}.webp" alt="" width="296" height="580">
+          <span class="chip video-card__city">{{ card.city | default(videos.unknownCity) }}</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="rail-nav videos__nav">
+      <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущие видео">
+        <img src="assets/img/arrow-left.svg" alt="">
+      </button>
+      <button class="rail-button" type="button" data-rail-next aria-label="Следующие видео">
+        <img src="assets/img/arrow-right.svg" alt="">
+      </button>
+    </div>
+  </div>
+  <img class="videos__stamp videos__stamp--choose" src="assets/img/stamp-choose-yours.svg" alt="" width="220" height="193">
+  <img class="videos__stamp videos__stamp--traditions" src="assets/img/stamp-traditions.svg" alt="" width="196" height="178">
+</section>

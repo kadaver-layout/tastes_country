@@ -1,0 +1,61 @@
+<dialog class="modal" id="mobile-menu" aria-label="Меню сайта">
+  <div class="modal__card modal__card--menu">
+    <button class="modal__close" type="button" data-close-dialog aria-label="Закрыть меню"></button>
+    <nav class="modal__menu" aria-label="Мобильная навигация">
+      <ul class="modal__menu-list">
+        {% for item in nav %}
+        <li><a class="modal__menu-link" href="{{ item.url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <a class="button button--lime modal__menu-phone" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+    <ul class="modal__socials">
+      {% for social in socials %}
+      <li>
+        <a class="modal__social" href="{{ social.url }}" aria-label="{{ social.name }}">
+          <img src="assets/img/{{ social.icon }}.svg" alt="" width="48" height="48">
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</dialog>
+
+<dialog class="modal" id="city-dialog" aria-labelledby="city-dialog-title">
+  <div class="modal__card">
+    <button class="modal__close" type="button" data-close-dialog aria-label="Закрыть выбор города"></button>
+    <div class="modal__copy">
+      <h2 class="modal__title" id="city-dialog-title">Выбор города</h2>
+      <label class="visually-hidden" for="city-select">Ваш город</label>
+      <select class="modal__select" id="city-select" data-city-select>
+        <option value="" disabled selected>Ваш город</option>
+        {% for city in cities %}
+        <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="city-confirm-dialog" aria-labelledby="city-confirm-title">
+  <div class="modal__card">
+    <button class="modal__close" type="button" data-close-dialog aria-label="Закрыть подтверждение города"></button>
+    <div class="modal__copy">
+      <h2 class="modal__title" id="city-confirm-title">Ваш город — <span data-detected-city></span>?</h2>
+      <p class="modal__lead">Так мы покажем ярмарку рядом с вами: актуальные даты, адрес, время работы и удобный маршрут.</p>
+      <div class="modal__actions">
+        <button class="button button--lime modal__action" type="button" data-city-confirm>Да, всё верно</button>
+        <button class="button modal__action modal__action--secondary" type="button" data-city-other>Выбрать другой</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="discount-dialog" aria-labelledby="discount-dialog-title">
+  <div class="modal__card modal__card--green">
+    <button class="modal__close" type="button" data-close-dialog aria-label="Закрыть форму скидки"></button>
+    <h2 class="modal__title modal__title--pale" id="discount-dialog-title">Сохраним скидку до нашей встречи</h2>
+    {% set prefix = "modal" %}
+    {% include "includes/discount-form.html" %}
+  </div>
+</dialog>

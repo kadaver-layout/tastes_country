@@ -1,0 +1,25 @@
+{# Общая форма скидки: используется в секции discount и в поп-апе. Префикс id задаётся вызывающим шаблоном. #}
+<form class="discount__form" data-discount-form action="#" method="post">
+  <label class="visually-hidden" for="{{ prefix }}-name">{{ discount.namePlaceholder }}</label>
+  <input class="discount__field" id="{{ prefix }}-name" name="name" type="text" placeholder="{{ discount.namePlaceholder }}" autocomplete="name" required>
+  <label class="visually-hidden" for="{{ prefix }}-phone">{{ discount.phonePlaceholder }}</label>
+  <input class="discount__field" id="{{ prefix }}-phone" name="phone" type="tel" placeholder="{{ discount.phonePlaceholder }}" autocomplete="tel" required>
+  <button class="discount__field discount__city" type="button" data-open-dialog="city-dialog" data-city-target="{{ prefix }}-city">
+    <span data-city-label>{{ discount.cityPlaceholder }}</span>
+    <img src="assets/img/chevron-down.svg" alt="" width="24" height="24">
+  </button>
+  <input type="hidden" name="city" id="{{ prefix }}-city" data-city-input>
+  <label class="visually-hidden" for="{{ prefix }}-source">{{ discount.sourcePlaceholder }}</label>
+  <select class="discount__field discount__source" id="{{ prefix }}-source" name="source" required>
+    <option value="" selected disabled>{{ discount.sourcePlaceholder }}</option>
+    {% for source in discount.sources %}
+    <option value="{{ source }}">{{ source }}</option>
+    {% endfor %}
+  </select>
+  <label class="discount__consent">
+    <input class="discount__checkbox" type="checkbox" name="consent" required>
+    <span>{{ discount.consent }}</span>
+  </label>
+  <p class="discount__error" role="alert" hidden data-form-error></p>
+  <button class="button button--lime discount__submit" type="submit">{{ discount.button }}</button>
+</form>

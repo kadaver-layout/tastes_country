@@ -1,0 +1,39 @@
+<section class="schedule">
+  <div class="container">
+    <h2 class="section-title schedule__title">{{ schedule.title }}</h2>
+    <div class="schedule__card">
+      <div class="schedule__header">
+        <p class="schedule__month">{{ schedule.month }}</p>
+        <ul class="schedule__days">
+          {% for day in schedule.days %}
+          <li class="schedule__day{% if day == schedule.today %} schedule__day--today{% endif %}">{{ day }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <ul class="schedule__rows">
+        {% for row in schedule.rows %}
+        <li class="schedule__row">
+          <div class="schedule__fair">
+            <h3 class="card-title schedule__city">{{ row.city }}</h3>
+            <p class="schedule__address">{{ row.address }}</p>
+            <p class="schedule__dates">{{ row.dates }}</p>
+          </div>
+          <ul class="schedule__cells">
+            {% for day in schedule.days %}
+            <li class="schedule__cell{% if day >= row.from and day <= row.to %} schedule__cell--active{% endif %}"></li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="rail-nav schedule__nav">
+        <button class="rail-button" type="button" data-week-prev aria-label="Предыдущая неделя" disabled>
+          <img src="assets/img/arrow-left.svg" alt="">
+        </button>
+        <button class="rail-button" type="button" data-week-next aria-label="Следующая неделя">
+          <img src="assets/img/arrow-right.svg" alt="">
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

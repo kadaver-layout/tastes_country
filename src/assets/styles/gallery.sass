@@ -1,0 +1,54 @@
+@use "_vars" as *
+
+.gallery
+  padding-block: 80px
+  @media ($mobile)
+    padding-block: 48px
+  &__container
+    position: relative
+  &__intro
+    display: grid
+    gap: 24px
+    max-width: 920px
+    margin-bottom: 40px
+  &__rail
+    position: relative
+  &__list
+    display: flex
+    overflow-x: auto
+    scroll-snap-type: x mandatory
+    scrollbar-width: none
+    &::-webkit-scrollbar
+      display: none
+  &__item
+    flex: 0 0 100%
+    scroll-snap-align: start
+    img
+      width: 100%
+      height: 845px
+      object-fit: cover
+      border-radius: 20px
+      @media ($tablet)
+        height: 520px
+      @media ($mobile)
+        height: 320px
+        border-radius: 10px
+  &__nav
+    justify-content: space-between
+    width: 324px
+    margin: 32px auto 0
+    @media ($mobile)
+      width: 200px
+  &__sticker
+    position: absolute
+    top: 260px
+    right: 60px
+    width: 250px
+    pointer-events: none
+    @media ($tablet)
+      top: 180px
+      right: 20px
+      width: 170px
+    @media ($mobile)
+      top: 120px
+      width: 120px

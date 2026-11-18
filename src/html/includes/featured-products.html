@@ -1,0 +1,45 @@
+<section class="featured">
+  <div class="container">
+    <h2 class="visually-hidden">Что попробовать на ярмарке</h2>
+    <div class="featured__card" data-rail data-rail-mode="slide">
+      <ul class="featured__list" data-rail-track>
+        {% for product in featuredProducts %}
+        <li class="featured__slide">
+          <div class="featured__media">
+            <img class="featured__photo" src="assets/img/{{ product.photo }}.webp" alt="{{ product.alt }}">
+          </div>
+          <div class="featured__info">
+            <img class="featured__blob" src="assets/img/blob.svg" alt="" aria-hidden="true">
+            <div class="featured__content">
+              <h3 class="card-title featured__title">{{ product.title }}</h3>
+              <p class="featured__description">{{ product.description }}</p>
+              <dl class="featured__details">
+                <div class="featured__detail">
+                  <dt>Вкус</dt>
+                  <dd>{{ product.taste }}</dd>
+                </div>
+                <div class="featured__detail">
+                  <dt>Регион</dt>
+                  <dd>{{ product.region }}</dd>
+                </div>
+              </dl>
+            </div>
+            <div class="rail-nav featured__nav">
+              <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущий продукт">
+                <img src="assets/img/arrow-left.svg" alt="">
+              </button>
+              <button class="rail-button" type="button" data-rail-next aria-label="Следующий продукт">
+                <img src="assets/img/arrow-right.svg" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="featured__cutout">
+            <img class="featured__outline" src="assets/img/{{ product.outline }}.svg" alt="" aria-hidden="true">
+            <img class="featured__cutout-photo" src="assets/img/{{ product.cutout }}.webp" alt="">
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>

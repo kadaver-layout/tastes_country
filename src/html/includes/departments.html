@@ -1,0 +1,18 @@
+<section class="departments">
+  <div class="container">
+    <h2 class="section-title departments__title">{{ departments.title }}</h2>
+    <ul class="departments__list">
+      {% for item in departments.items %}
+      <li class="department">
+        <h3 class="card-title department__title">{{ item.title }}</h3>
+        <p class="department__text">{{ item.text }}</p>
+        <p class="department__label">{{ item.contactLabel }}</p>
+        <a class="department__phone" href="tel:{{ item.phone | replace(" ", "") | replace("-", "") | replace("+", "") }}">{{ item.phone }}</a>
+        {% if item.email %}
+        <a class="department__email" href="mailto:{{ item.email }}">{{ item.email }}</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

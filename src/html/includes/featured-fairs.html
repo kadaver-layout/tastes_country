@@ -1,0 +1,21 @@
+<section class="featured-fairs">
+  <div class="container">
+    <h2 class="visually-hidden">Ближайшие ярмарки</h2>
+    <div class="featured-fairs__rail" data-rail>
+      <ul class="featured-fairs__list" data-rail-track>
+        {% set cardModifier = "fair-card--featured" %}
+        {% for fair in fairs.cards | slice(0, 2) %}
+        {% include "includes/fair-card.html" %}
+        {% endfor %}
+      </ul>
+      <div class="rail-nav featured-fairs__nav">
+        <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущие ярмарки">
+          <img src="assets/img/arrow-left.svg" alt="">
+        </button>
+        <button class="rail-button" type="button" data-rail-next aria-label="Следующие ярмарки">
+          <img src="assets/img/arrow-right.svg" alt="">
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

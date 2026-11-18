@@ -1,0 +1,109 @@
+@use "_vars" as *
+
+.benefits
+  padding-block: 60px
+  @media ($mobile)
+    padding-block: 32px
+  &__container
+    position: relative
+  &__list
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+    gap: 20px
+    align-items: start
+    @media ($tablet)
+      grid-template-columns: 1fr 1fr
+    @media ($mobile)
+      grid-template-columns: 1fr
+  &__stamp
+    position: absolute
+    pointer-events: none
+    &--regional
+      left: 22%
+      bottom: -70px
+      width: 210px
+      @media ($tablet)
+        left: 40%
+        bottom: -50px
+        width: 144px
+      @media ($mobile)
+        left: 8px
+        bottom: auto
+        top: 240px
+        width: 121px
+    &--farmers
+      right: 26%
+      bottom: -50px
+      width: 210px
+      @media ($tablet)
+        right: 4%
+        bottom: -40px
+        width: 124px
+      @media ($mobile)
+        right: 8px
+        bottom: auto
+        top: 620px
+        width: 124px
+
+.benefit-card
+  padding: 40px
+  border-radius: 30px
+  @media ($tablet)
+    padding: 32px
+  @media ($mobile)
+    padding: 24px
+  &__title
+    font-weight: 500
+    font-size: 36px
+    line-height: 37.8px
+    letter-spacing: -0.03em
+    @media ($tablet)
+      font-size: 28px
+      line-height: 29.4px
+    @media ($mobile)
+      font-size: 24px
+      line-height: 26.4px
+  &__text
+    margin-top: 16px
+    font-size: 24px
+    line-height: 30px
+    letter-spacing: -0.02em
+    @media ($tablet)
+      font-size: 18px
+      line-height: 25.2px
+    @media ($mobile)
+      font-size: 16px
+      line-height: 22.4px
+  // Лёгкий наклон карточек повторяет «разложенные от руки» плашки макета.
+  &--assortment
+    background: $orange
+    color: $cream
+    transform: rotate(-1.5deg)
+    .benefit-card__text
+      color: $cream
+  &--support
+    background: $cream
+    transform: translateY(70px) rotate(0.5deg)
+    .benefit-card__text
+      color: $green-mid
+  &--tasting
+    background: $green
+    color: $green-pale
+    transform: translateY(30px) rotate(-1deg)
+    .benefit-card__text
+      color: $green-light
+  &--standards
+    background: $lime
+    transform: translateY(-10px) rotate(1.5deg)
+    .benefit-card__text
+      color: $green-nav
+  @media ($tablet)
+    &--support
+      transform: translateY(20px) rotate(0.5deg)
+    &--tasting
+      transform: rotate(-1deg)
+    &--standards
+      transform: translateY(10px) rotate(1.5deg)
+  @media ($mobile)
+    &--assortment, &--support, &--tasting, &--standards
+      transform: none

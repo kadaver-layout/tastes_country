@@ -1,0 +1,74 @@
+@use "_vars" as *
+
+.showcase
+  padding-block: 40px
+  &__container
+    position: relative
+    display: flex
+    justify-content: flex-end
+    min-height: 790px
+    @media ($tablet)
+      min-height: 0
+      flex-direction: column
+      gap: 24px
+  &__accent
+    position: absolute
+    top: 40px
+    left: 0
+    width: 570px
+    @media ($tablet)
+      position: static
+      width: 320px
+    @media ($mobile)
+      width: 240px
+  &__sticker
+    position: absolute
+    top: 440px
+    left: 240px
+    width: 200px
+    @media ($tablet)
+      top: auto
+      bottom: 24px
+      left: 24px
+      width: 150px
+    @media ($mobile)
+      left: 12px
+      width: 120px
+  &__media
+    position: relative
+    width: 66.3%
+    @media ($tablet)
+      width: 100%
+  &__photo
+    width: 100%
+    height: 790px
+    object-fit: cover
+    border-radius: 20px
+    opacity: 0.9
+    @media ($tablet)
+      height: 520px
+    @media ($mobile)
+      height: 320px
+      border-radius: 10px
+  &__chip
+    position: absolute
+    display: inline-flex
+    align-items: center
+    min-height: 49px
+    padding: 12px 20px
+    border-radius: 10px
+    background: $lime
+    font-weight: 500
+    font-size: 20px
+    line-height: 24px
+    letter-spacing: -0.04em
+    color: $green
+    transition: background $anim
+    &:hover
+      background: $lime-dark
+      text-decoration: none
+    @media ($mobile)
+      min-height: 36px
+      padding: 8px 12px
+      font-size: 14px
+      line-height: 16.8px

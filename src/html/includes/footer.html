@@ -1,0 +1,43 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__card">
+      <div class="footer__top">
+        <a class="footer__logo" href="index.html" aria-label="Вкусы страны — на главную">
+          <img src="assets/img/logo-footer.svg" alt="" width="152" height="70">
+        </a>
+        <nav class="footer__nav" aria-label="Навигация в подвале">
+          <p class="footer__label">навигация</p>
+          <ul class="footer__list">
+            {% for item in nav %}
+            <li><a class="footer__link" href="{{ item.url }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+        <div class="footer__contacts">
+          <div class="footer__group">
+            <p class="footer__label">отдел заботы и помощи</p>
+            <a class="footer__link" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+          </div>
+          <div class="footer__group">
+            <p class="footer__label">социальные сети</p>
+            <ul class="footer__socials">
+              {% for social in socials %}
+              <li>
+                <a class="footer__social" href="{{ social.url }}" aria-label="{{ social.name }}">
+                  <img src="assets/img/{{ social.icon }}.svg" alt="" width="60" height="60">
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026. Все права защищены</p>
+        {% for item in legal %}
+        <a class="footer__legal" href="{{ item.url }}">{{ item.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</footer>

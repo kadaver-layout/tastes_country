@@ -1,0 +1,10 @@
+{% set title = "Спасибо за заявку — Вкусы страны" %}
+{% set meta_description = "Заявка на скидку получена. Сотрудник ярмарки «Вкусы страны» свяжется с вами и закрепит скидку 10%." %}
+{% set hero = pageHeroes.thanks %}
+{% extends "layouts/default.html" %}
+{% block content %}
+<main class="main" id="main-content">
+  {% include "includes/page-hero.html" %}
+  {% include "includes/nearby-fairs.html" %}
+</main>
+{% endblock %}

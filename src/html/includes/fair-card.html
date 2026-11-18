@@ -1,0 +1,28 @@
+<li class="fair-card">
+  <article class="fair-card__article {{ cardModifier | default('') }}">
+    <div class="fair-card__media">
+      <img class="fair-card__photo" src="assets/img/{{ fair.photo }}.webp" alt="{{ fair.alt }}" width="600" height="340">
+      {% if fair.status %}
+      <p class="chip fair-card__status">{{ fair.status }}</p>
+      {% endif %}
+    </div>
+    <div class="fair-card__body">
+      <h3 class="card-title fair-card__city">{{ fair.city }}</h3>
+      <p class="fair-card__address">{{ fair.address }}</p>
+      <dl class="fair-card__details">
+        <div class="fair-card__detail">
+          <dt>Даты проведения</dt>
+          <dd>{{ fair.dates }}</dd>
+        </div>
+        <div class="fair-card__detail">
+          <dt>Время работы</dt>
+          <dd>{{ fair.hours }}</dd>
+        </div>
+      </dl>
+      <div class="fair-card__actions">
+        <button class="button {% if cardModifier == 'fair-card--featured' %}button--green{% else %}button--lime{% endif %} fair-card__button" type="button" data-open-dialog="discount-dialog">{{ fairs.discountLabel }}</button>
+        <a class="button button--cream fair-card__button" href="{{ fair.routeUrl | default('#') }}">{{ fairs.routeLabel }}</a>
+      </div>
+    </div>
+  </article>
+</li>

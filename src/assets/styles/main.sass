@@ -1,0 +1,44 @@
+@use "_vars" as *
+@use "style"
+@use "header"
+@use "footer"
+@use "modal"
+@use "hero"
+@use "nearby-fairs"
+@use "benefits"
+@use "featured-products"
+@use "categories"
+@use "discount-promo"
+@use "producers"
+@use "fair-videos"
+@use "coverage"
+@use "discount"
+@use "page-hero"
+@use "showcase"
+@use "platter"
+@use "gallery"
+@use "about"
+@use "contacts"
+@use "schedule"
+
+.back-to-categories
+  position: fixed
+  left: 40px
+  bottom: 40px
+  z-index: 15
+  box-shadow: $shadow-card
+  @media ($mobile)
+    left: 20px
+    bottom: 20px
+
+.home-tail
+  position: relative
+  &__pattern
+    position: absolute
+    top: 0
+    right: -100px
+    width: 1900px
+    max-width: none
+    pointer-events: none
+    @media ($tablet)
+      display: none

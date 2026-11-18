@@ -1,0 +1,14 @@
+{% set title = "О ярмарке — Вкусы страны" %}
+{% set meta_description = "«Вкусы страны» — продуктовая ярмарка в разных городах России: фермерские продукты, бесплатные дегустации и живое общение с производителями." %}
+{% set hero = pageHeroes.about %}
+{% extends "layouts/default.html" %}
+{% block content %}
+<main class="main" id="main-content">
+  {% include "includes/page-hero.html" %}
+  {% include "includes/values.html" %}
+  {% include "includes/gallery.html" %}
+  {% include "includes/producers.html" %}
+  {% include "includes/discount.html" %}
+  {% include "includes/faq.html" %}
+</main>
+{% endblock %}

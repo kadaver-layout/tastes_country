@@ -1,0 +1,10 @@
+{% set title = "Страница не найдена — Вкусы страны" %}
+{% set meta_description = "Такой страницы нет. Вернитесь на главную или посмотрите, что попробовать на ярмарке «Вкусы страны»." %}
+{% set hero = pageHeroes.notfound %}
+{% extends "layouts/default.html" %}
+{% block content %}
+<main class="main" id="main-content">
+  {% include "includes/page-hero.html" %}
+  {% include "includes/nearby-fairs.html" %}
+</main>
+{% endblock %}

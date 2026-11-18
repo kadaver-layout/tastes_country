@@ -1,0 +1,14 @@
+<section class="discount" id="discount">
+  <div class="container">
+    <div class="discount__card">
+      <img class="discount__photo" src="assets/img/discount-photo.webp" alt="Чай, мёд и варенье на деревянном столе">
+      <div class="discount__content">
+        <h2 class="section-title discount__title">{{ discount.title }}</h2>
+        <p class="lead discount__lead">{{ discount.lead }}</p>
+        {% set prefix = "discount" %}
+        {% include "includes/discount-form.html" %}
+      </div>
+      <img class="discount__stamp" src="assets/img/stamp-discount.svg" alt="" width="162" height="162">
+    </div>
+  </div>
+</section>

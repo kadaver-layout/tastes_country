@@ -1,0 +1,14 @@
+{% set title = "Расписание ярмарок — Вкусы страны" %}
+{% set meta_description = "Расписание ярмарок «Вкусы страны»: города, площадки, даты и время работы. Выберите ярмарку рядом с вами." %}
+{% set hero = pageHeroes.schedule %}
+{% extends "layouts/default.html" %}
+{% block content %}
+<main class="main" id="main-content">
+  {% include "includes/page-hero.html" %}
+  {% include "includes/featured-fairs.html" %}
+  {% include "includes/schedule-table.html" %}
+  {% include "includes/gallery.html" %}
+  {% include "includes/discount.html" %}
+  {% include "includes/coverage.html" %}
+</main>
+{% endblock %}

@@ -1,0 +1,14 @@
+<section class="benefits">
+  <div class="container benefits__container">
+    <ul class="benefits__list">
+      {% for benefit in benefits %}
+      <li class="benefit-card benefit-card--{{ benefit.modifier }}">
+        <h3 class="benefit-card__title">{{ benefit.title }}</h3>
+        <p class="benefit-card__text">{{ benefit.text }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    <img class="benefits__stamp benefits__stamp--regional" src="assets/img/stamp-regional-tastes.svg" alt="" width="210" height="190">
+    <img class="benefits__stamp benefits__stamp--farmers" src="assets/img/stamp-straight-from-farmers.svg" alt="" width="210" height="190">
+  </div>
+</section>

@@ -1,0 +1,144 @@
+@use "_vars" as *
+
+.featured
+  padding-block: 40px
+  &__card
+    border-radius: 20px
+    background: $cream
+    overflow: hidden
+    @media ($mobile)
+      border-radius: 10px
+  &__list
+    display: flex
+    overflow-x: auto
+    scroll-snap-type: x mandatory
+    scrollbar-width: none
+    &::-webkit-scrollbar
+      display: none
+  &__slide
+    position: relative
+    display: grid
+    grid-template-columns: 600px minmax(0, 1fr) 500px
+    flex: 0 0 100%
+    min-height: 910px
+    scroll-snap-align: start
+    @media ($tablet)
+      grid-template-columns: minmax(0, 1fr) 280px
+      min-height: 600px
+    @media ($mobile)
+      display: flex
+      flex-direction: column
+      min-height: 0
+  &__media
+    @media ($tablet)
+      position: absolute
+      inset: 0
+      opacity: 0.25
+    @media ($mobile)
+      position: static
+      opacity: 1
+      order: 2
+  &__photo
+    width: 100%
+    height: 100%
+    object-fit: cover
+    border-radius: 20px
+    @media ($mobile)
+      height: 300px
+      border-radius: 10px
+  &__info
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    padding: 40px
+    @media ($mobile)
+      order: 1
+      padding: 24px 20px
+  &__blob
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 695px
+    max-width: 100%
+    transform: translate(-50%, -54%)
+    @media ($tablet)
+      width: 500px
+    @media ($mobile)
+      width: 100%
+  &__content
+    position: relative
+    max-width: 475px
+  &__description
+    margin-top: 16px
+    font-size: 24px
+    line-height: 30px
+    letter-spacing: -0.02em
+    color: $green-muted
+    @media ($tablet)
+      font-size: 18px
+      line-height: 25.2px
+    @media ($mobile)
+      font-size: 16px
+      line-height: 22.4px
+  &__details
+    display: grid
+    grid-template-columns: 1fr 1fr
+    gap: 20px
+    margin-top: 32px
+    dt
+      font-size: 20px
+      line-height: 29px
+      letter-spacing: -0.02em
+      color: $green-muted
+      @media ($mobile)
+        font-size: 14px
+        line-height: 20.3px
+    dd
+      margin: 4px 0 0
+      font-weight: 500
+      font-size: 24px
+      line-height: 24px
+      letter-spacing: -0.02em
+      color: $green-mid
+      @media ($mobile)
+        font-size: 18px
+        line-height: 19.8px
+  &__nav
+    position: relative
+    justify-content: space-between
+    width: 244px
+    margin-top: 48px
+    @media ($mobile)
+      width: 200px
+      margin-top: 24px
+  &__cutout
+    position: relative
+    align-self: center
+    justify-self: center
+    width: 500px
+    height: 550px
+    @media ($tablet)
+      width: 280px
+      height: 310px
+    @media ($mobile)
+      order: 3
+      width: 220px
+      height: 240px
+      margin: 0 auto 24px
+  &__outline
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 134%
+    max-width: none
+    transform: translate(-50%, -50%)
+  &__cutout-photo
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 100%
+    height: 100%
+    object-fit: contain
+    transform: translate(-50%, -50%)

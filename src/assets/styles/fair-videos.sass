@@ -1,0 +1,90 @@
+@use "_vars" as *
+
+.videos
+  position: relative
+  padding-block: 80px
+  @media ($mobile)
+    padding-block: 48px
+  &__intro
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 24px
+    text-align: center
+  &__title
+    max-width: 920px
+  &__lead
+    max-width: 640px
+  &__rail
+    margin-top: 48px
+    @media ($mobile)
+      margin-top: 24px
+  &__list
+    display: flex
+    gap: 20px
+    overflow-x: auto
+    scrollbar-width: none
+    padding-inline: 40px
+    &::-webkit-scrollbar
+      display: none
+    @media ($tablet)
+      padding-inline: 20px
+  &__item
+    flex: 0 0 296px
+    @media ($mobile)
+      flex-basis: 220px
+  &__nav
+    justify-content: space-between
+    width: 324px
+    margin: 32px auto 0
+    @media ($mobile)
+      width: 200px
+  &__stamp
+    position: absolute
+    pointer-events: none
+    &--choose
+      top: 40px
+      right: 180px
+      width: 220px
+      @media ($tablet)
+        right: 20px
+        width: 150px
+      @media ($mobile)
+        top: 0
+        right: 12px
+        width: 110px
+    &--traditions
+      top: 220px
+      left: 180px
+      width: 196px
+      @media ($tablet)
+        top: 180px
+        left: 20px
+        width: 120px
+      @media ($mobile)
+        display: none
+
+.video-card
+  position: relative
+  display: block
+  width: 100%
+  border-radius: 20px
+  overflow: hidden
+  @media ($mobile)
+    border-radius: 10px
+  &__poster
+    width: 100%
+    height: 580px
+    object-fit: cover
+    @media ($mobile)
+      height: 430px
+  &__city
+    position: absolute
+    top: 20px
+    left: 20px
+  video
+    width: 100%
+    height: 580px
+    object-fit: cover
+    @media ($mobile)
+      height: 430px

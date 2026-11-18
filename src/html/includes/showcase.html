@@ -1,0 +1,12 @@
+<section class="showcase">
+  <div class="container showcase__container">
+    <img class="showcase__accent" src="assets/img/showcase-accent.svg" alt="{{ showcaseNote }}">
+    <img class="showcase__sticker" src="assets/img/sticker-tasting.svg" alt="" width="200" height="90">
+    <div class="showcase__media">
+      <img class="showcase__photo" src="assets/img/{{ showcase.photo }}.webp" alt="Семья за столом с продуктами ярмарки">
+      {% for chip in showcase.chips %}
+      <a class="showcase__chip" href="#{{ chip.target }}" style="left: {{ chip.x }}%; top: {{ chip.y }}%">{{ chip.text }} ↗</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

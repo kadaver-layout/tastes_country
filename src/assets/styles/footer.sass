@@ -1,0 +1,95 @@
+@use "_vars" as *
+
+.footer
+  padding-block: 40px
+  @media ($mobile)
+    padding-block: 20px
+  &__card
+    padding: 64px 40px 32px
+    border-radius: 20px
+    background: $cream
+    @media ($tablet)
+      padding: 40px 32px 24px
+    @media ($mobile)
+      padding: 24px 20px
+      border-radius: 10px
+  &__top
+    display: grid
+    grid-template-columns: 1.2fr 1fr 1fr
+    gap: 40px
+    @media ($tablet)
+      grid-template-columns: 1fr 1fr
+    @media ($mobile)
+      display: flex
+      flex-direction: column
+      gap: 24px
+  &__logo
+    img
+      width: 152px
+      height: 70px
+      @media ($tablet)
+        width: 120px
+        height: 55px
+      @media ($mobile)
+        width: 90px
+        height: 42px
+    @media ($tablet)
+      grid-column: 1 / -1
+  &__label
+    margin-bottom: 16px
+    font-size: 20px
+    line-height: 29px
+    letter-spacing: -0.02em
+    color: $green-muted
+    @media ($mobile)
+      margin-bottom: 8px
+      font-size: 16px
+      line-height: 22.4px
+  &__list
+    display: grid
+    gap: 12px
+  &__link
+    font-weight: 500
+    font-size: 24px
+    line-height: 24px
+    letter-spacing: -0.02em
+    color: $green-nav
+    @media ($mobile)
+      font-size: 18px
+      line-height: 19.8px
+  &__contacts
+    display: grid
+    gap: 32px
+    align-content: start
+    @media ($mobile)
+      gap: 24px
+  &__socials
+    display: flex
+    gap: 10px
+    img
+      width: 60px
+      height: 60px
+      @media ($mobile)
+        width: 48px
+        height: 48px
+  &__bottom
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 24px
+    margin-top: 64px
+    font-size: 18px
+    line-height: 23.4px
+    letter-spacing: -0.02em
+    color: $green-muted
+    @media ($tablet)
+      margin-top: 40px
+    @media ($mobile)
+      flex-direction: column
+      align-items: flex-start
+      gap: 12px
+      margin-top: 24px
+      font-size: 14px
+      line-height: 18.2px
+  &__legal
+    color: $green-muted

@@ -1,0 +1,17 @@
+<section class="values">
+  <div class="container">
+    <div class="values__intro">
+      <h2 class="section-title values__title">{{ values.title }}</h2>
+      <p class="lead values__lead">{{ values.lead }}</p>
+      <p class="lead values__lead">{{ values.lead2 }}</p>
+    </div>
+    <ul class="values__list">
+      {% for card in values.cards %}
+      <li class="benefit-card benefit-card--{{ card.modifier }} values__card">
+        <h3 class="benefit-card__title">{{ card.title }}</h3>
+        <p class="benefit-card__text">{{ card.text }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

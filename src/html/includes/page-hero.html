@@ -1,0 +1,25 @@
+<section class="page-hero">
+  <div class="page-hero__background" aria-hidden="true">
+    <img class="page-hero__pattern" src="assets/img/hero-pattern.svg" alt="">
+  </div>
+  <div class="container page-hero__container">
+    <div class="page-hero__lead">
+      <p>{{ hero.lead }}</p>
+      {% if hero.lead2 %}<p>{{ hero.lead2 }}</p>{% endif %}
+    </div>
+    <div class="page-hero__content">
+      <h1 class="page-hero__title">{{ hero.title }}{% if hero.accent %} <span class="page-hero__accent">{{ hero.accent }}</span>{% endif %}</h1>
+      {% if hero.actions | length %}
+      <div class="page-hero__actions">
+        {% for action in hero.actions %}
+        {% if action.dialog %}
+        <button class="button button--{{ action.kind }}" type="button" data-open-dialog="{{ action.dialog }}">{{ action.label }}</button>
+        {% else %}
+        <a class="button button--{{ action.kind }}" href="{{ action.href }}">{{ action.label }}</a>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

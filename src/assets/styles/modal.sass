@@ -1,0 +1,124 @@
+@use "_vars" as *
+
+.modal
+  padding: 0
+  border: 0
+  background: transparent
+  max-width: min(640px, calc(100vw - 40px))
+  width: 100%
+  &::backdrop
+    background: rgba(27, 27, 27, 0.6)
+  &__card
+    position: relative
+    padding: 60px 80px
+    border-radius: 24px
+    background: $cream
+    box-shadow: $shadow-card
+    @media ($mobile)
+      padding: 32px 20px
+      border-radius: 20px
+    &--green
+      background: $green
+      .modal__close
+        color: $cream
+      .discount__form
+        margin-top: 32px
+    &--menu
+      display: flex
+      flex-direction: column
+      gap: 32px
+      padding: 40px 24px
+  &__close
+    position: absolute
+    top: 20px
+    right: 20px
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    width: 50px
+    height: 50px
+    border-radius: 5px
+    color: $green
+    // Крестик рисуется маской, чтобы перекрашиваться на зелёной карточке.
+    &::before
+      content: ""
+      width: 20px
+      height: 20px
+      background: currentColor
+      mask: url("../img/close.svg") center / contain no-repeat
+    @media ($mobile)
+      top: 12px
+      right: 12px
+      width: 40px
+      height: 40px
+      &::before
+        width: 16px
+        height: 16px
+  &__copy
+    display: grid
+    gap: 24px
+    max-width: 480px
+  &__title
+    font-weight: 500
+    font-size: 28px
+    line-height: 38px
+    letter-spacing: -0.04em
+    color: $green
+    @media ($mobile)
+      font-size: 20px
+      line-height: 24px
+    &--pale
+      color: $green-pale
+      max-width: 480px
+  &__lead
+    font-size: 18px
+    line-height: 25.2px
+    letter-spacing: -0.02em
+    color: $green-muted
+    @media ($mobile)
+      font-size: 16px
+      line-height: 22.4px
+  &__select
+    width: 100%
+    min-height: 68px
+    padding: 20px 24px
+    border: 0
+    border-radius: 10px
+    appearance: none
+    background: $cream-page url("../img/chevron-down.svg") right 24px center / 24px no-repeat
+    font-size: 18px
+    line-height: 23.4px
+    letter-spacing: -0.02em
+    color: rgba(41, 81, 47, 0.8)
+    @media ($mobile)
+      min-height: 58px
+      font-size: 16px
+      line-height: 20.8px
+  &__actions
+    display: flex
+    gap: 10px
+    margin-top: 16px
+    @media ($mobile)
+      flex-direction: column
+  &__action
+    min-height: 60px
+    flex: 1
+    &--secondary
+      background: $cream-page
+      color: $green
+      &:hover
+        background: $cream-deep
+  &__menu-list
+    display: grid
+    gap: 16px
+  &__menu-link
+    font-weight: 500
+    font-size: 24px
+    line-height: 26.4px
+    letter-spacing: -0.02em
+    color: $green-nav
+  &__menu-phone
+    width: 100%
+  &__socials
+    display: flex
+    gap: 10px

@@ -1,0 +1,35 @@
+<section class="care">
+  <div class="container care__container">
+    <div class="care__intro">
+      <h2 class="section-title care__title">{{ care.title }}</h2>
+      <p class="lead care__lead">{{ care.lead }}</p>
+    </div>
+    <div class="care__contacts">
+      <div class="care__group">
+        <p class="care__label">телефон</p>
+        <a class="care__value" href="tel:{{ care.phone | replace(" ", "") | replace("-", "") | replace("+", "") }}">{{ care.phone }}</a>
+      </div>
+      <div class="care__group">
+        <p class="care__label">почта</p>
+        <a class="care__value" href="mailto:{{ care.email }}">{{ care.email }}</a>
+      </div>
+      <div class="care__group">
+        <p class="care__label">время работы</p>
+        <p class="care__value">{{ care.hours }}</p>
+        <p class="care__note">{{ care.hoursNote }}</p>
+      </div>
+      <div class="care__group">
+        <p class="care__label">написать нам</p>
+        <ul class="care__socials">
+          {% for social in socials %}
+          <li>
+            <a class="care__social" href="{{ social.url }}" aria-label="{{ social.name }}">
+              <img src="assets/img/{{ social.icon }}.svg" alt="" width="60" height="60">
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

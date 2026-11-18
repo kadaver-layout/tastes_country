@@ -1,0 +1,21 @@
+<section class="platter" id="{{ section.slug }}">
+  <div class="container platter__container">
+    <div class="platter__copy">
+      <h2 class="section-title platter__title">{{ section.title }}</h2>
+      <p class="lead platter__lead">{{ section.description }}</p>
+    </div>
+    <div class="platter__plate" style="left: {{ section.plate.x }}%; top: {{ section.plate.y }}%; width: {{ section.plate.w }}%; height: {{ section.plate.h }}%">
+      <img class="platter__image" src="assets/img/{{ section.photo }}.webp" alt="{{ section.title }}">
+      {% for pin in section.pins %}
+      {% set px = (pin.x - section.plate.x) / section.plate.w * 100 %}
+      {% set py = (pin.y - section.plate.y) / section.plate.h * 100 %}
+      <button class="platter__pin" type="button" data-pin="{{ loop.index0 }}" style="left: {{ px }}%; top: {{ py }}%" aria-label="{{ pin.label | default('Продукт на блюде') }}" {% if not pin.label %}tabindex="-1"{% endif %}>
+        <img src="assets/img/pin.svg" alt="">
+      </button>
+      {% endfor %}
+    </div>
+    {% for label in section.labels %}
+    <button class="platter__label platter__label--{{ label.align }}" type="button" data-label="{{ label.pin }}" style="left: {{ label.x }}%; top: {{ label.y }}%; width: {{ label.w }}%">{{ label.text }}</button>
+    {% endfor %}
+  </div>
+</section>

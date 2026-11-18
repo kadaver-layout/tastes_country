@@ -1,0 +1,32 @@
+<section class="hero" data-hero>
+  <div class="hero__background" aria-hidden="true">
+    <img class="hero__pattern" src="assets/img/hero-pattern.svg" alt="">
+  </div>
+  <div class="container hero__container">
+    <p class="hero__lead">{{ hero.lead }}</p>
+    <div class="hero__content">
+      <p class="hero__details">
+        <span>{{ hero.dates }}</span>
+        <span class="hero__separator" aria-hidden="true">|</span>
+        <span>{{ hero.hours }}</span>
+        <span class="hero__separator" aria-hidden="true">|</span>
+        <span>{{ hero.address }}</span>
+      </p>
+      <h1 class="hero__title">{{ hero.title }}<br>{{ hero.titleCity }} <span class="hero__accent">{{ hero.accent }}</span></h1>
+    </div>
+    <div class="hero__actions">
+      <button class="button button--lime" type="button" data-open-dialog="discount-dialog">{{ hero.discountLabel }}</button>
+      <a class="button button--cream" href="{{ hero.routeUrl | default('#') }}">{{ hero.routeLabel }}</a>
+    </div>
+  </div>
+  <div class="hero__strip">
+    <ul class="hero__photos">
+      {% for photo in hero.photos %}
+      <li class="hero__photo"><img src="assets/img/{{ photo.src }}.webp" alt="{{ photo.alt }}" width="306" height="345"></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <img class="hero__sticker hero__sticker--tasting" src="assets/img/sticker-tasting.svg" alt="" width="303" height="136">
+  <img class="hero__sticker hero__sticker--100" src="assets/img/sticker-100.svg" alt="" width="263" height="155">
+  <img class="hero__stamp" src="assets/img/stamp-natural.svg" alt="" width="200" height="180">
+</section>

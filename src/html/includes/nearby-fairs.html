@@ -1,0 +1,21 @@
+<section class="nearby-fairs">
+  <div class="container nearby-fairs__container">
+    <h2 class="section-title nearby-fairs__title">{{ fairs.title }}</h2>
+    <div class="nearby-fairs__rail" data-rail>
+      <ul class="nearby-fairs__list" data-rail-track>
+        {% for fair in fairs.cards %}
+        {% include "includes/fair-card.html" %}
+        {% endfor %}
+      </ul>
+      <div class="rail-nav nearby-fairs__nav">
+        <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущие ярмарки">
+          <img src="assets/img/arrow-left.svg" alt="">
+        </button>
+        <button class="rail-button" type="button" data-rail-next aria-label="Следующие ярмарки">
+          <img src="assets/img/arrow-right.svg" alt="">
+        </button>
+      </div>
+    </div>
+    <img class="nearby-fairs__stamp" src="assets/img/stamp-manufacturers.svg" alt="" width="200" height="180">
+  </div>
+</section>
