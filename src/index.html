@@ -2,7 +2,8 @@
 {% set meta_description = "Сыры, мясные и рыбные деликатесы, сладости и другие находки от производителей из разных регионов. Бесплатные дегустации на ярмарке «Вкусы страны»." %}
 {% extends "layouts/default.html" %}
 {% block content %}
-<main class="main" id="main-content">
+<main class="main main--index" id="main-content">
+  <img class="main__pattern" src="assets/img/page-pattern.svg" alt="" aria-hidden="true">
   {% include "includes/hero.html" %}
   {% include "includes/nearby-fairs.html" %}
   {% include "includes/benefits.html" %}
@@ -11,10 +12,7 @@
   {% include "includes/discount-promo.html" %}
   {% include "includes/producers.html" %}
   {% include "includes/fair-videos.html" %}
-  <div class="home-tail">
-    <img class="home-tail__pattern" src="assets/img/page-pattern.svg" alt="" aria-hidden="true">
-    {% include "includes/coverage.html" %}
-    {% include "includes/discount.html" %}
-  </div>
+  {% include "includes/coverage.html" %}
+  {% include "includes/discount.html" %}
 </main>
 {% endblock %}

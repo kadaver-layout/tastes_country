@@ -1,17 +1,20 @@
 {% set title = "Что попробовать на ярмарке — Вкусы страны" %}
 {% set meta_description = "Продукты ярмарки «Вкусы страны»: мясные деликатесы, сыры, дары Камчатки, специи, чай и сладости от фермерских производителей." %}
 {% set hero = pageHeroes.products %}
+{% set categoriesIntroVisible = true %}
 {% extends "layouts/default.html" %}
 {% block content %}
-<main class="main" id="main-content">
+<main class="main main--products" id="main-content">
   {% include "includes/page-hero.html" %}
-  {% include "includes/showcase.html" %}
+  {% include "includes/products-intro.html" %}
   {% include "includes/categories.html" %}
   {% for section in productSections %}
   {% include "includes/platter.html" %}
-  {% endfor %}
+  {% if loop.index == 3 %}
   {% include "includes/discount-promo.html" %}
+  {% endif %}
+  {% endfor %}
   {% include "includes/nearby-fairs.html" %}
-  <a class="back-to-categories button button--cream" href="#main-content">Вернуться к категориям</a>
+  <a class="back-to-categories button button--lime" href="#categories">Перейти к выбору категории</a>
 </main>
 {% endblock %}

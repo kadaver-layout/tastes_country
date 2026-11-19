@@ -1,43 +1,59 @@
 @use "_vars" as *
 
+// Слайдер продавцов: облако слева, квадратные фото справа (секция 1840x910).
 .producers
-  padding-block: 40px
   &__card
-    display: grid
-    grid-template-columns: minmax(0, 1fr) 910px
-    border-radius: 20px
-    background: $cream
-    overflow: hidden
-    @media ($tablet)
-      grid-template-columns: 1fr
-    @media ($mobile)
-      border-radius: 10px
-  &__info
     position: relative
-    display: flex
-    flex-direction: column
-    justify-content: center
-    padding: 60px
+    height: 910px
     @media ($tablet)
+      height: auto
+  &__info
+    position: absolute
+    top: 105px
+    left: 120px
+    width: 695px
+    height: 695px
+    @media ($tablet)
+      position: relative
+      top: 0
+      left: 0
+      display: flex
+      flex-direction: column
+      justify-content: center
+      width: auto
+      height: auto
       padding: 40px 32px
     @media ($mobile)
       padding: 24px 20px
   &__blob
     position: absolute
-    top: 50%
-    left: 50%
-    width: 720px
-    max-width: 100%
-    transform: translate(-50%, -50%)
+    inset: 0
+    width: 100%
+    height: 100%
+    @media ($tablet)
+      inset: auto
+      top: 50%
+      left: 50%
+      width: 500px
+      max-width: 100%
+      height: auto
+      transform: translate(-50%, -50%)
     @media ($mobile)
       width: 100%
   &__content
-    position: relative
-    max-width: 475px
+    position: absolute
+    top: 150px
+    left: 110px
+    width: 475px
+    max-width: calc(100% - 150px)
+    @media ($tablet)
+      position: relative
+      top: 0
+      left: 0
   &__text
-    margin-top: 16px
+    margin-top: 20px
     font-size: 24px
-    line-height: 27.6px
+    line-height: 28px
     letter-spacing: -0.02em
     color: $green-muted
     @media ($tablet)
@@ -49,30 +65,42 @@
   &__sticker
     position: absolute
     pointer-events: none
+    @media ($tablet)
+      display: none
     &--lime
-      top: 18%
-      right: 8%
+      top: 501px
+      left: -65px
       width: 160px
-      @media ($mobile)
-        top: 12px
-        right: 12px
-        width: 90px
     &--red
-      bottom: 12%
-      left: 4%
+      top: 83px
+      left: 581px
       width: 170px
-      @media ($mobile)
-        bottom: auto
-        top: 200px
-        left: 0
-        width: 100px
   &__nav
-    position: relative
-    margin-top: 48px
+    position: absolute
+    top: 673px
+    left: 225px
+    gap: 120px
+    @media ($tablet)
+      position: relative
+      top: 0
+      left: 0
+      width: 244px
+      margin-top: 48px
     @media ($mobile)
+      width: 200px
       margin-top: 24px
   &__gallery
+    position: absolute
+    top: 0
+    right: 0
+    width: 910px
+    height: 910px
     min-width: 0
+    overflow: hidden
+    @media ($tablet)
+      position: relative
+      width: auto
+      height: auto
   &__photos
     display: flex
     height: 100%
@@ -87,10 +115,8 @@
     img
       width: 100%
       height: 100%
-      min-height: 420px
       object-fit: cover
       @media ($tablet)
         height: 580px
       @media ($mobile)
         height: 320px
-        min-height: 0

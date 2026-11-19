@@ -1,7 +1,7 @@
 <section class="discount" id="discount">
   <div class="container">
     <div class="discount__card">
-      <img class="discount__photo" src="assets/img/discount-photo.webp" alt="Чай, мёд и варенье на деревянном столе">
+      <img class="discount__photo" src="assets/img/{{ discountPhoto | default('discount-photo') }}.webp" alt="Продукты ярмарки на деревянном столе">
       <div class="discount__content">
         <h2 class="section-title discount__title">{{ discount.title }}</h2>
         <p class="lead discount__lead">{{ discount.lead }}</p>

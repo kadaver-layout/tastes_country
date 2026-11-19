@@ -1,0 +1,22 @@
+<section class="products-intro">
+  <div class="container products-intro__stage">
+    <div class="products-intro__actions">
+      {% for action in pageHeroes.products.actions %}
+      {% if action.dialog %}
+      <button class="button button--{{ action.kind }}" type="button" data-open-dialog="{{ action.dialog }}">{{ action.label }}</button>
+      {% else %}
+      <a class="button button--{{ action.kind }}" href="{{ action.href }}">{{ action.label }}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <img class="products-intro__note" src="assets/img/showcase-accent.svg" alt="" aria-hidden="true">
+    <img class="products-intro__arrow" src="assets/img/showcase-arrow.svg" alt="" aria-hidden="true">
+    <img class="products-intro__sticker" src="assets/img/sticker-tasting.svg" alt="" width="207" height="93">
+    <div class="products-intro__media">
+      <img class="products-intro__photo" src="assets/img/showcase-family.webp" alt="Семья за столом с продуктами ярмарки">
+      {% for chip in productsIntro.chips %}
+      <a class="chip products-intro__chip" href="{{ chip.href }}" style="left: {{ chip.x }}%; top: {{ chip.y }}%">{{ chip.label }} ↗</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

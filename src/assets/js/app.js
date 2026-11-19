@@ -4,13 +4,15 @@
 //   setCity(city) -> Promise<void> — сохранение города на сервере (необязательно).
 // Геолокацию определяет сервер: body[data-detected-city] или событие tastes:geo-detected.
 // Вёрстка не имитирует успешные серверные действия.
+import TomSelect from "tom-select";
 
 document.addEventListener("DOMContentLoaded", () => {
   const dialogs = initDialogs();
   initRails();
   initCity(dialogs);
   initDiscountForms();
-  initVideoCards();
+  initReels();
+  initSelects();
   initPlatters();
   initWeekNavigation();
 });
@@ -103,17 +105,21 @@ function initRails() {
       const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
       return item.getBoundingClientRect().width + gap;
     }
-    function update() {
-      previous.disabled = track.scrollLeft <= 1;
-      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    // В макете стрелки всегда активны: лента ходит по кругу.
+    function atEdge(direction) {
+      if (direction > 0) return track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+      return track.scrollLeft <= 1;
     }
     function move(direction) {
+      if (atEdge(direction)) {
+        track.scrollTo({ left: direction > 0 ? 0 : track.scrollWidth, behavior: scrollBehavior() });
+        return;
+      }
       track.scrollBy({ left: direction * step(), behavior: scrollBehavior() });
     }
 
     previous.addEventListener("click", () => move(-1));
     next.addEventListener("click", () => move(1));
-    track.addEventListener("scroll", update, { passive: true });
     // Доступ к карточкам за границей ленты через Tab не требует нажатия стрелок.
     track.addEventListener("focusin", (event) => {
       const card = event.target.closest("li");
@@ -124,8 +130,6 @@ function initRails() {
         card.scrollIntoView({ block: "nearest", inline: "nearest" });
       }
     });
-    new ResizeObserver(update).observe(track);
-    update();
   });
 }
 
@@ -148,7 +152,10 @@ function initCity(dialogs) {
 
   function applyCity(city) {
     document.querySelectorAll("[data-current-city]").forEach((item) => { item.textContent = city; });
-    document.querySelectorAll("[data-city-input]").forEach((input) => { input.value = city; });
+    document.querySelectorAll("[data-city-input]").forEach((input) => {
+      input.value = city;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
     document.querySelectorAll("[data-city-label]").forEach((label) => { label.textContent = city; });
     if (select) select.value = city;
     saveCookie("tastes_city", city);
@@ -199,6 +206,39 @@ function initCity(dialogs) {
 }
 
 // Заявки на скидку: секция на странице и поп-ап используют одну разметку формы.
+function fieldKey(field) {
+  return field.id || field.dataset.cityTarget || field.name;
+}
+
+function fieldInvalid(field) {
+  if (field.matches("button[data-city-target]")) {
+    return !document.getElementById(field.dataset.cityTarget)?.value;
+  }
+  return !field.checkValidity();
+}
+
+function markFieldErrors(form) {
+  form.querySelectorAll('input:not([type=hidden]), select, button[data-city-target]').forEach((field) => {
+    const invalid = fieldInvalid(field);
+    field.classList.toggle("is-error", invalid);
+    const key = fieldKey(field);
+    const message = form.querySelector(`.discount__field-error[data-for="${key}"]`);
+    if (invalid) {
+      const note = message || document.createElement("p");
+      note.className = "discount__field-error";
+      note.dataset.for = key;
+      note.textContent = "Заполните это поле.";
+      if (!message) {
+        const wrapper = field.closest(".ts-wrapper") || (field.nextElementSibling?.matches(".ts-wrapper") ? field.nextElementSibling : null);
+        const anchor = wrapper || (field.matches(".discount__checkbox") ? field.closest("label") : null) || field;
+        anchor.insertAdjacentElement("afterend", note);
+      }
+    } else if (message) {
+      message.remove();
+    }
+  });
+}
+
 function initDiscountForms() {
   document.querySelectorAll("[data-discount-form]").forEach((form) => {
     const error = form.querySelector("[data-form-error]");
@@ -207,7 +247,8 @@ function initDiscountForms() {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       error.hidden = true;
-      if (!form.reportValidity()) return;
+      markFieldErrors(form);
+      if (form.querySelector(".is-error")) return;
       if (typeof window.TastesIntegrations?.submitDiscount !== "function") {
         // Без Битрикс не показываем фиктивное подтверждение заявки.
         error.textContent = "Не удалось отправить заявку. Попробуйте позже.";
@@ -229,6 +270,17 @@ function initDiscountForms() {
         submit.disabled = false;
         submit.removeAttribute("aria-busy");
       }
+    });
+
+    // Повторная валидность поля снимает подсветку и подсказку.
+    ["input", "change"].forEach((type) => {
+      form.addEventListener(type, (event) => {
+        const cityInput = event.target.matches("[data-city-input]") ? event.target : null;
+        const field = cityInput ? form.querySelector(`[data-city-target="${cityInput.id}"]`) : event.target;
+        if (!field?.classList?.contains("is-error") || fieldInvalid(field)) return;
+        field.classList.remove("is-error");
+        form.querySelector(`.discount__field-error[data-for="${fieldKey(field)}"]`)?.remove();
+      });
     });
   });
 }
@@ -276,20 +328,39 @@ function initWeekNavigation() {
   next.addEventListener("click", () => shift(1));
 }
 
-// Видео-карточки: постер из макета, сам ролик подключает интегратор
-// через data-video-src. Без адреса видео карточка остаётся постером.
-function initVideoCards() {
-  document.querySelectorAll("[data-video-card]").forEach((card) => {
-    card.addEventListener("click", () => {
-      const src = card.dataset.videoSrc;
-      if (!src || card.querySelector("video")) return;
-      const video = document.createElement("video");
-      video.src = src;
-      video.controls = true;
-      video.autoplay = true;
-      video.playsInline = true;
-      const poster = card.querySelector(".video-card__poster");
-      if (poster) poster.replaceWith(video);
+// Вертикальные reels: ролик играет, пока карточка в зоне видимости,
+// клик по карточке ставит паузу или возобновляет показ.
+function initReels() {
+  const reels = [...document.querySelectorAll("[data-reel-toggle] video")];
+  if (!reels.length) return;
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (entry.intersectionRatio >= 0.6) video.play().catch(() => {});
+          else video.pause();
+        });
+      },
+      { threshold: [0, 0.6] }
+    );
+    reels.forEach((video) => observer.observe(video));
+  }
+  reels.forEach((video) => {
+    const card = video.closest("[data-reel-toggle]");
+    card?.addEventListener("click", () => {
+      if (video.paused) video.play().catch(() => {});
+      else video.pause();
+    });
+  });
+}
+
+// Селекты формы и модалки города: tom-select с темой по макету «Выпадающие списки».
+function initSelects() {
+  document.querySelectorAll(".js-select").forEach((select) => {
+    new TomSelect(select, {
+      allowEmptyOption: false,
+      placeholder: select.querySelector('option[value=""]')?.textContent || "",
     });
   });
 }

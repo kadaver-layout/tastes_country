@@ -1,7 +1,7 @@
 @use "_vars" as *
 
+// Слайдер продуктов: геометрия карточки из макета (карточка 1840x910).
 .featured
-  padding-block: 40px
   &__card
     border-radius: 20px
     background: $cream
@@ -17,22 +17,24 @@
       display: none
   &__slide
     position: relative
-    display: grid
-    grid-template-columns: 600px minmax(0, 1fr) 500px
     flex: 0 0 100%
-    min-height: 910px
+    height: 910px
     scroll-snap-align: start
     @media ($tablet)
-      grid-template-columns: minmax(0, 1fr) 280px
+      height: auto
       min-height: 600px
     @media ($mobile)
-      display: flex
-      flex-direction: column
       min-height: 0
   &__media
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    width: 32.6%
     @media ($tablet)
       position: absolute
       inset: 0
+      width: auto
       opacity: 0.25
     @media ($mobile)
       position: static
@@ -42,34 +44,59 @@
     width: 100%
     height: 100%
     object-fit: cover
-    border-radius: 20px
+    border-radius: 20px 0 0 20px
+    @media ($tablet)
+      border-radius: 20px
     @media ($mobile)
       height: 300px
       border-radius: 10px
   &__info
-    position: relative
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: center
-    padding: 40px
+    position: absolute
+    top: 105px
+    left: 43.42%
+    width: 37.77%
+    height: 695px
+    @media ($tablet)
+      position: relative
+      top: 0
+      left: 0
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      width: auto
+      height: auto
+      padding: 40px
     @media ($mobile)
       order: 1
       padding: 24px 20px
   &__blob
     position: absolute
-    top: 50%
-    left: 50%
-    width: 695px
-    max-width: 100%
-    transform: translate(-50%, -54%)
+    inset: 0
+    width: 100%
+    height: 100%
     @media ($tablet)
+      position: absolute
+      inset: auto
+      top: 50%
+      left: 50%
       width: 500px
+      max-width: 100%
+      height: auto
+      transform: translate(-50%, -54%)
     @media ($mobile)
       width: 100%
   &__content
-    position: relative
-    max-width: 475px
+    position: absolute
+    top: 150px
+    left: 110px
+    width: 475px
+    max-width: calc(100% - 150px)
+    @media ($tablet)
+      position: relative
+      top: 0
+      left: 0
+      max-width: 475px
   &__description
     margin-top: 16px
     font-size: 24px
@@ -86,7 +113,7 @@
     display: grid
     grid-template-columns: 1fr 1fr
     gap: 20px
-    margin-top: 32px
+    margin-top: 60px
     dt
       font-size: 20px
       line-height: 29px
@@ -106,39 +133,65 @@
         font-size: 18px
         line-height: 19.8px
   &__nav
-    position: relative
-    justify-content: space-between
-    width: 244px
-    margin-top: 48px
+    position: absolute
+    top: 673px
+    left: 225px
+    gap: 120px
+    @media ($tablet)
+      position: relative
+      top: 0
+      left: 0
+      justify-content: space-between
+      width: 244px
+      margin-top: 48px
     @media ($mobile)
       width: 200px
       margin-top: 24px
   &__cutout
-    position: relative
-    align-self: center
-    justify-self: center
-    width: 500px
-    height: 550px
+    position: absolute
+    top: -181px
+    right: -150px
+    width: 633px
+    height: 714px
     @media ($tablet)
+      top: 40px
+      right: 20px
       width: 280px
       height: 310px
     @media ($mobile)
+      position: relative
+      top: 0
+      right: 0
       order: 3
       width: 220px
       height: 240px
       margin: 0 auto 24px
+  &__slide:nth-child(2) &__cutout
+    top: 292px
+    right: -355px
+    width: 947px
+    height: 773px
+  &__slide:nth-child(3) &__cutout
+    top: 207px
+    right: 0
+    width: 448px
+    height: 506px
   &__outline
     position: absolute
-    top: 50%
-    left: 50%
-    width: 134%
+    top: 18px
+    right: -17px
+    bottom: -17px
+    left: -17px
+    width: auto
+    height: auto
     max-width: none
-    transform: translate(-50%, -50%)
+    @media ($tablet)
+      display: none
+  &__slide:nth-child(2) &__outline,
+  &__slide:nth-child(3) &__outline
+    display: none
   &__cutout-photo
-    position: absolute
-    top: 50%
-    left: 50%
+    position: relative
     width: 100%
     height: 100%
     object-fit: contain
-    transform: translate(-50%, -50%)

@@ -1,4 +1,17 @@
-<section class="platter" id="{{ section.slug }}">
+{% if section.collage %}
+<section class="collage" id="{{ section.slug }}">
+  <div class="collage__stage" style="aspect-ratio: 1920 / {{ section.collage.height }}">
+    <div class="collage__copy" style="left: {{ section.collage.copy.x }}%; top: {{ section.collage.copy.y }}%; width: {{ section.collage.copy.w }}%">
+      <h2 class="section-title collage__title">{{ section.title }}</h2>
+      <p class="lead collage__lead">{{ section.description }}</p>
+    </div>
+    {% for item in section.collage.items %}
+    <img class="collage__item" src="assets/img/{{ item.photo }}.webp" alt="" style="left: {{ item.x }}%; top: {{ item.y }}%; width: {{ item.w }}%">
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+<section class="platter{% if section.copySide == 'right' %} platter--copy-right{% endif %}" id="{{ section.slug }}">
   <div class="container platter__container">
     <div class="platter__copy">
       <h2 class="section-title platter__title">{{ section.title }}</h2>
@@ -19,3 +32,4 @@
     {% endfor %}
   </div>
 </section>
+{% endif %}

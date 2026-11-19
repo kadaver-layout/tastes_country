@@ -1,6 +1,6 @@
 <section class="nearby-fairs">
   <div class="container nearby-fairs__container">
-    <h2 class="section-title nearby-fairs__title">{{ fairs.title }}</h2>
+    <h2 class="section-title nearby-fairs__title">{{ fairsHeading | default(fairs.title) }}</h2>
     <div class="nearby-fairs__rail" data-rail>
       <ul class="nearby-fairs__list" data-rail-track>
         {% for fair in fairs.cards %}

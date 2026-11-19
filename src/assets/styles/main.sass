@@ -16,29 +16,82 @@
 @use "page-hero"
 @use "showcase"
 @use "platter"
+@use "collage"
+@use "products-intro"
+@use "select"
 @use "gallery"
 @use "about"
 @use "contacts"
 @use "schedule"
 
-.back-to-categories
-  position: fixed
-  left: 40px
-  bottom: 40px
-  z-index: 15
-  box-shadow: $shadow-card
-  @media ($mobile)
-    left: 20px
-    bottom: 20px
-
-.home-tail
+// Вертикальный ритм секций — зазоры из макета Figma.
+.main
   position: relative
+  overflow-x: clip
+  > * + *
+    margin-top: 200px
+  > .main__pattern + *
+    margin-top: 0
+  > section
+    position: relative
+    z-index: 1
   &__pattern
     position: absolute
-    top: 0
-    right: -100px
+    top: 1825px
+    left: 60px
+    z-index: 0
     width: 1900px
     max-width: none
     pointer-events: none
     @media ($tablet)
       display: none
+
+.main--products
+  > .products-intro
+    margin-top: 80px
+  > .products-intro .products-intro__actions
+    top: -25px
+
+.main
+  > .page-hero__outside
+    margin-top: 80px
+
+.main--products
+  > .categories
+    margin-top: 240px
+  > .platter,
+  > .collage,
+  > .promo
+    margin-top: 250px
+  > .nearby-fairs
+    margin-top: 210px
+
+.main--index
+  > .coverage
+    margin-top: 170px
+  > .discount
+    margin-top: 180px
+  + .footer
+    margin-top: 100px
+
+.main--about
+  > .values
+    margin-top: 150px
+
+.main--schedule
+  > .featured-fairs
+    margin-top: 100px
+
+.main--thanks
+  > .nearby-fairs
+    margin-top: 200px
+
+.back-to-categories
+  position: fixed
+  right: 40px
+  bottom: 40px
+  z-index: 15
+  box-shadow: $shadow-card
+  @media ($mobile)
+    right: 20px
+    bottom: 20px

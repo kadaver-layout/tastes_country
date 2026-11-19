@@ -1,0 +1,32 @@
+@use "_vars" as *
+
+.collage
+  // Вырезки в макете выходят за край фрейма — обрезаем по секции.
+  overflow: hidden
+  @media ($mobile)
+    padding-block: 24px 32px
+  &__stage
+    position: relative
+    width: 100vw
+    margin-inline: calc(50% - 50vw)
+    @media ($mobile)
+      display: grid
+      grid-template-columns: 1fr 1fr
+      gap: 12px
+      aspect-ratio: auto !important
+  &__copy
+    position: absolute
+    @media ($mobile)
+      position: static
+      grid-column: 1 / -1
+      width: auto !important
+      margin-bottom: 8px
+  &__lead
+    margin-top: 32px
+    @media ($mobile)
+      margin-top: 12px
+  &__item
+    position: absolute
+    @media ($mobile)
+      position: static
+      width: 100% !important

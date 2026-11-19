@@ -1,7 +1,6 @@
 @use "_vars" as *
 
 .platter
-  padding-block: 60px
   @media ($mobile)
     padding-block: 32px
   &__container
@@ -14,14 +13,19 @@
       gap: 24px
   &__copy
     position: absolute
-    top: 0
+    top: 14px
     left: 0
     width: 32.6%
     @media ($tablet)
       position: static
       width: 100%
+  &--copy-right &__copy
+    left: auto
+    right: 0
+    @media ($tablet)
+      left: auto
   &__lead
-    margin-top: 24px
+    margin-top: 32px
   &__plate
     position: absolute
     @media ($tablet)

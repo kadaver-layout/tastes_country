@@ -1,0 +1,97 @@
+@use "_vars" as *
+
+// Базовый CSS tom-select не подключаем: прячем оригинальный селект сами.
+select.ts-hidden-accessible
+  position: absolute !important
+  width: 1px
+  height: 1px
+  margin: -1px
+  padding: 0
+  border: 0
+  overflow: hidden
+  clip: rect(0 0 0 0)
+  clip-path: inset(50%)
+  white-space: nowrap
+
+// Тема tom-select по макету «Выпадающие списки»: зелёный контрол и дропдаун.
+.ts-wrapper
+  position: relative
+  &.single .ts-control
+    display: flex
+    align-items: center
+    width: 100%
+    min-height: 64px
+    padding: 18px 24px
+    border: 0
+    border-radius: 10px
+    background: $green-nav
+    color: $green-light
+    font-size: 18px
+    line-height: 23.4px
+    letter-spacing: -0.02em
+    cursor: pointer
+    input
+      flex: 1
+      min-width: 0
+      border: 0
+      background: transparent
+      color: inherit
+      font: inherit
+      letter-spacing: inherit
+      &::placeholder
+        color: rgba($green-light, 0.6)
+    @media ($mobile)
+      min-height: 56px
+      font-size: 16px
+      line-height: 20.8px
+    &::after
+      content: ""
+      flex-shrink: 0
+      margin-left: auto
+      width: 24px
+      height: 24px
+      background: currentColor
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 11L12.53 15.6688C12.2057 15.8714 11.7943 15.8714 11.47 15.6688L4 11' stroke-width='2' stroke-linecap='round' stroke='%23fff'/%3E%3C/svg%3E") center / contain no-repeat
+      transition: transform $anim
+  &.dropdown-active .ts-control::after
+    transform: rotate(180deg)
+  &:focus-within .ts-control
+    outline: 2px solid $green-pale
+    outline-offset: 1px
+  &.disabled .ts-control
+    opacity: 0.5
+    cursor: default
+  .ts-dropdown
+    position: absolute
+    top: calc(100% + 6px)
+    left: 0
+    right: 0
+    z-index: 30
+    max-height: 264px
+    overflow-y: auto
+    border: 0
+    border-radius: 10px
+    background: $green-nav
+    scrollbar-width: thin
+    scrollbar-color: $green transparent
+    &::-webkit-scrollbar
+      width: 6px
+    &::-webkit-scrollbar-thumb
+      border-radius: 3px
+      background: $green
+    .option
+      padding: 14px 24px
+      font-size: 18px
+      line-height: 23.4px
+      letter-spacing: -0.02em
+      color: $green-pale
+      cursor: pointer
+      @media ($mobile)
+        padding: 12px 20px
+        font-size: 16px
+        line-height: 20.8px
+      &.active,
+      &:hover
+        background: rgba($cream, 0.14)
+      &.selected
+        background: rgba($cream, 0.22)

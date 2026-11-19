@@ -1,28 +1,29 @@
 @use "_vars" as *
 
+// Плашки преимуществ: координаты и высоты из макета (секция 1840x446).
 .benefits
-  padding-block: 60px
-  @media ($mobile)
-    padding-block: 32px
   &__container
     position: relative
   &__list
-    display: grid
-    grid-template-columns: repeat(4, 1fr)
-    gap: 20px
-    align-items: start
+    position: relative
+    height: 446px
     @media ($tablet)
+      display: grid
       grid-template-columns: 1fr 1fr
+      gap: 20px
+      height: auto
+      align-items: start
     @media ($mobile)
       grid-template-columns: 1fr
   &__stamp
     position: absolute
     pointer-events: none
     &--regional
-      left: 22%
-      bottom: -70px
+      top: 280px
+      left: 400px
       width: 210px
       @media ($tablet)
+        top: auto
         left: 40%
         bottom: -50px
         width: 144px
@@ -32,10 +33,11 @@
         top: 240px
         width: 121px
     &--farmers
-      right: 26%
-      bottom: -50px
+      top: 256px
+      left: 1220px
       width: 210px
       @media ($tablet)
+        top: auto
         right: 4%
         bottom: -40px
         width: 124px
@@ -46,9 +48,15 @@
         width: 124px
 
 .benefit-card
-  padding: 40px
+  position: absolute
+  padding: 52px 55px
   border-radius: 30px
   @media ($tablet)
+    position: relative
+    top: auto !important
+    left: auto !important
+    width: auto !important
+    height: auto !important
     padding: 32px
   @media ($mobile)
     padding: 24px
@@ -74,36 +82,37 @@
     @media ($mobile)
       font-size: 16px
       line-height: 22.4px
-  // Лёгкий наклон карточек повторяет «разложенные от руки» плашки макета.
   &--assortment
+    top: 8px
+    left: 0
+    width: 480px
+    height: 416px
     background: $orange
     color: $cream
-    transform: rotate(-1.5deg)
     .benefit-card__text
       color: $cream
   &--support
+    top: 92px
+    left: 466px
+    width: 468px
+    height: 264px
     background: $cream
-    transform: translateY(70px) rotate(0.5deg)
     .benefit-card__text
       color: $green-mid
   &--tasting
+    top: 30px
+    left: 910px
+    width: 483px
+    height: 325px
     background: $green
     color: $green-pale
-    transform: translateY(30px) rotate(-1deg)
     .benefit-card__text
       color: $green-light
   &--standards
+    top: 8px
+    left: 1361px
+    width: 479px
+    height: 400px
     background: $lime
-    transform: translateY(-10px) rotate(1.5deg)
     .benefit-card__text
       color: $green-nav
-  @media ($tablet)
-    &--support
-      transform: translateY(20px) rotate(0.5deg)
-    &--tasting
-      transform: rotate(-1deg)
-    &--standards
-      transform: translateY(10px) rotate(1.5deg)
-  @media ($mobile)
-    &--assortment, &--support, &--tasting, &--standards
-      transform: none

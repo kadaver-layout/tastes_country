@@ -1,7 +1,6 @@
 @use "_vars" as *
 
 .featured-fairs
-  padding-block: 60px 20px
   &__list
     display: flex
     gap: 20px
@@ -9,24 +8,24 @@
     scrollbar-width: none
     &::-webkit-scrollbar
       display: none
+    @media ($desktop)
+      flex-direction: column
+      overflow-x: visible
   &__nav
     justify-content: center
     margin-top: 32px
     @media ($desktop)
       display: none
 
-.fair-card--featured
-  flex-basis: 910px
-  @media ($tablet)
-    flex-basis: 480px
-  @media ($mobile)
-    flex-basis: 300px
+// Анонсы ярмарок в расписании — горизонтальные плашки 1840x620.
+.fair-card__article.fair-card--featured
+  @media ($desktop)
+    display: grid
+    grid-template-columns: 910px minmax(0, 1fr)
+    min-height: 620px
   .fair-card__photo
-    height: 420px
-    @media ($tablet)
-      height: 260px
-    @media ($mobile)
-      height: 180px
+    @media ($desktop)
+      height: 100%
   .button--lime
     background: $green
     color: $cream
@@ -34,12 +33,11 @@
       background: $green-nav
 
 .schedule
-  padding-block: 60px
   @media ($mobile)
     padding-block: 32px
   &__title
     max-width: 820px
-    margin-bottom: 40px
+    margin-bottom: 60px
   &__card
     padding: 60px
     border-radius: 20px
@@ -51,16 +49,19 @@
       border-radius: 10px
   &__header, &__row
     display: grid
-    grid-template-columns: 600px repeat(7, 1fr)
+    grid-template-columns: 430px repeat(7, minmax(0, 1fr))
     gap: 8px
     align-items: center
     @media ($tablet)
-      grid-template-columns: 240px repeat(7, 1fr)
+      grid-template-columns: 220px repeat(7, minmax(0, 1fr))
     @media ($mobile)
-      grid-template-columns: 1fr
+      grid-template-columns: minmax(0, 1fr)
+  &__header
+    padding-bottom: 20px
+    border-bottom: 1px solid $cream-deep
   &__month
-    font-size: 24px
-    line-height: 30px
+    font-size: 20px
+    line-height: 26px
     letter-spacing: -0.02em
     color: $green-muted
     @media ($mobile)
@@ -71,24 +72,43 @@
       display: grid
       grid-template-columns: repeat(7, 1fr)
       gap: 8px
-      margin-bottom: 16px
   &__day
     display: flex
     align-items: center
     justify-content: center
-    height: 44px
-    border-radius: 8px
-    font-size: 20px
-    line-height: 29px
+    height: 64px
+    border-radius: 10px
+    font-size: 18px
+    line-height: 23.4px
     letter-spacing: -0.02em
     color: $green-muted
     &--today
-      background: $green
+      background: $orange
       color: $cream
   &__rows
+    // Ширина колонки дня: минус инфо-колонка и шесть межколоночных отступов.
+    --col: calc((100% - 430px - 56px) / 7)
+    --info: 438px
+    position: relative
     display: grid
-    gap: 24px
-    margin-top: 32px
+    gap: 60px
+    margin-top: 40px
+    @media ($tablet)
+      --col: calc((100% - 220px - 56px) / 7)
+      --info: 228px
+      gap: 32px
+    @media ($mobile)
+      gap: 24px
+    &::before
+      content: ""
+      position: absolute
+      top: -20px
+      bottom: 0
+      left: calc(var(--info) + var(--today, 0) * (var(--col) + 8px) + var(--col) / 2)
+      width: 1px
+      background: rgba($orange, 0.45)
+      @media ($mobile)
+        display: none
   &__row
     @media ($mobile)
       gap: 12px
@@ -98,36 +118,45 @@
     display: grid
     gap: 8px
     padding-right: 24px
+  &__city
+    font-weight: 500
+    font-size: 28px
+    line-height: 32px
+    letter-spacing: -0.03em
+    @media ($tablet)
+      font-size: 20px
+      line-height: 24px
   &__address
-    font-size: 24px
-    line-height: 30px
+    font-size: 18px
+    line-height: 23.4px
     letter-spacing: -0.02em
     color: $green-muted
     @media ($tablet)
-      font-size: 16px
-      line-height: 22.4px
-  &__dates
-    font-size: 24px
-    line-height: 30px
+      font-size: 14px
+      line-height: 18.2px
+  &__bar
+    position: relative
+    z-index: 1
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 86px
+    border-radius: 8px
+    background: $cream-deep
+    font-size: 20px
+    line-height: 26px
     letter-spacing: -0.02em
     @media ($tablet)
-      font-size: 16px
-      line-height: 22.4px
-  &__cells
-    display: contents
+      height: 56px
+      font-size: 14px
+      line-height: 18.2px
     @media ($mobile)
-      display: grid
-      grid-template-columns: repeat(7, 1fr)
-      gap: 8px
-  &__cell
-    height: 24px
-    border-radius: 6px
-    background: $cream-page
-    &--active
-      background: $lime
+      grid-column: 1 / -1 !important
+      height: 48px
   &__nav
-    justify-content: space-between
-    width: 324px
-    margin: 40px auto 0
+    justify-content: center
+    gap: 196px
+    margin-top: 48px
     @media ($mobile)
-      width: 200px
+      gap: 60px
+      margin-top: 32px

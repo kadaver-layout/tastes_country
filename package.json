@@ -56,5 +56,14 @@
     "semver-regex": "^4.0.5",
     "postcss": "^8.4.31",
     "execa": "^8.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kadaver-layout/tastes_country.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/kadaver-layout/tastes_country/issues"
+  },
+  "homepage": "https://github.com/kadaver-layout/tastes_country#readme"
 }

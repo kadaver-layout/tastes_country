@@ -59,6 +59,7 @@
 body
   margin: 0
   min-width: 360px
+  overflow-x: clip
   font: 400 16px / 20.8px $font-body
   letter-spacing: -0.02em
   color: $green
@@ -157,17 +158,28 @@ img
     background: $lime
     color: $green
     &:hover
-      background: $lime-dark
+      background: $lime-light
   &--cream
     background: $cream
     color: $green
     &:hover
-      background: $cream-deep
+      background: #fdf9ef
   &--green
     background: $green
     color: $cream
     &:hover
       background: $green-nav
+  &:focus-visible
+    outline: 2px solid $green-pale
+    outline-offset: 2px
+  &--lime:disabled
+    background: $disabled
+    color: $cream
+    opacity: 1
+  &--cream:disabled
+    background: #d9d9d9
+    color: $green-muted
+    opacity: 1
   &:disabled
     opacity: 0.4
 
@@ -189,6 +201,9 @@ img
     height: 20px
   &:hover:not(:disabled)
     background: $green-nav
+  &:focus-visible
+    outline: 2px solid $green-pale
+    outline-offset: 2px
   &:disabled
     background: $disabled
 

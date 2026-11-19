@@ -1,12 +1,11 @@
 @use "_vars" as *
 
 .care
-  padding-block: 80px 40px
   @media ($mobile)
     padding-block: 48px 24px
   &__container
     display: grid
-    gap: 48px
+    gap: 80px
   &__intro
     display: grid
     gap: 24px
@@ -56,11 +55,10 @@
         height: 48px
 
 .departments
-  padding-block: 40px 80px
   @media ($mobile)
     padding-block: 24px 48px
   &__title
-    margin-bottom: 40px
+    margin-bottom: 80px
   &__list
     display: grid
     grid-template-columns: repeat(3, 1fr)
@@ -68,6 +66,10 @@
     align-items: start
     @media ($tablet)
       grid-template-columns: 1fr
+
+.department
+  @media ($desktop)
+    min-height: 398px
 
 .department
   display: grid

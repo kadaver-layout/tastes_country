@@ -1,6 +1,11 @@
-<section class="categories">
+<section class="categories" id="categories">
   <div class="container">
-    <h2 class="visually-hidden">Категории продукции</h2>
+    {% if categoriesIntroVisible %}
+    <div class="categories__intro">
+      <h2 class="section-title categories__title">{{ categoriesIntro.title }}</h2>
+      <p class="lead categories__lead">{{ categoriesIntro.lead }}</p>
+    </div>
+    {% endif %}
     <ul class="categories__list">
       {% for category in categories %}
       <li class="categories__item">

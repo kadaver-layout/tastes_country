@@ -3,7 +3,8 @@
 .coverage
   position: relative
   padding-block: 80px 0
-  // Карта выше секции и продолжается вниз, как в макете.
+  // Карта обрезается границами секции, чтобы не наезжать на футер.
+  overflow: hidden
   min-height: 580px
   @media ($tablet)
     min-height: 0
@@ -36,8 +37,9 @@
     margin-top: 24px
   &__map
     position: absolute
-    top: -100px
-    right: -140px
+    top: 50%
+    right: 0
+    transform: translateY(-50%)
     width: 1260px
     max-width: none
     pointer-events: none

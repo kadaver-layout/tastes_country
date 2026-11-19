@@ -1,14 +1,17 @@
 @use "_vars" as *
 
 .values
-  padding-block: 80px 100px
   @media ($mobile)
     padding-block: 48px 64px
   &__intro
     display: grid
+    justify-items: center
     gap: 24px
     max-width: 920px
-    margin-bottom: 48px
+    margin: 0 auto 20px
+    text-align: center
+  &__board
+    position: relative
   &__list
     display: grid
     grid-template-columns: repeat(3, 1fr)
@@ -16,20 +19,67 @@
     align-items: start
     @media ($tablet)
       grid-template-columns: 1fr
+      gap: 32px
   &__card
-    transform: none
+    padding: 40px
+    border-radius: 16px
+    @media ($desktop)
+      min-height: 513px
     @media ($tablet)
-      transform: none
+      transform: none !important
+      margin-top: 0 !important
+    &--craft
+      margin-top: 20px
+      background: $orange
+      transform: rotate(-3.2deg)
+      .values__card-title
+        color: $cream
+      .values__card-text
+        color: rgba($cream, 0.85)
+    &--family
+      margin-top: 52px
+      background: $cream
+      transform: rotate(-0.6deg)
+    &--daily
+      background: $lime
+      transform: rotate(-2deg)
+  &__card-title
+    font-weight: 500
+    font-size: 26px
+    line-height: 31px
+    letter-spacing: -0.03em
+  &__card-text
+    margin-top: 16px
+    font-size: 18px
+    line-height: 24px
+    letter-spacing: -0.02em
+    color: $green-muted
+  &__sticker
+    position: absolute
+    pointer-events: none
+    @media ($tablet)
+      display: none
+    &--craft
+      top: -94px
+      left: 28.4%
+      width: 187px
+    &--family
+      bottom: -70px
+      left: 61.2%
+      width: 229px
 
 .faq
-  padding-block: 80px
   @media ($mobile)
     padding-block: 48px
   &__title
-    margin-bottom: 40px
+    margin-bottom: 60px
   &__list
     display: grid
-    gap: 12px
+    grid-template-columns: 1fr 1fr
+    gap: 12px 20px
+    align-items: start
+    @media ($tablet)
+      grid-template-columns: 1fr
   &__details
     border-radius: 20px
     background: $cream

@@ -10,19 +10,17 @@
           {% endfor %}
         </ul>
       </div>
-      <ul class="schedule__rows">
+      {% set todayIndex = schedule.days.indexOf(schedule.today) %}
+      <ul class="schedule__rows" style="--today: {{ todayIndex }}">
         {% for row in schedule.rows %}
+        {% set fromIndex = row.from - schedule.days[0] %}
+        {% set toIndex = row.to - schedule.days[0] %}
         <li class="schedule__row">
           <div class="schedule__fair">
-            <h3 class="card-title schedule__city">{{ row.city }}</h3>
+            <h3 class="schedule__city">{{ row.city }}</h3>
             <p class="schedule__address">{{ row.address }}</p>
-            <p class="schedule__dates">{{ row.dates }}</p>
           </div>
-          <ul class="schedule__cells">
-            {% for day in schedule.days %}
-            <li class="schedule__cell{% if day >= row.from and day <= row.to %} schedule__cell--active{% endif %}"></li>
-            {% endfor %}
-          </ul>
+          <p class="schedule__bar" style="grid-column: {{ fromIndex + 2 }} / {% if toIndex > 6 %}-1{% else %}{{ toIndex + 3 }}{% endif %}">{{ row.dates }}</p>
         </li>
         {% endfor %}
       </ul>

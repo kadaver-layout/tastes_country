@@ -1,0 +1,65 @@
+@use "_vars" as *
+
+// Сцена из макета: кнопки, пометка и стикер слева, фото семьи вправо до края.
+.products-intro
+  &__stage
+    position: relative
+    height: 790px
+    @media ($tablet)
+      height: auto
+      display: grid
+      gap: 24px
+    @media ($mobile)
+      gap: 16px
+  &__actions
+    position: absolute
+    top: -25px
+    left: 620px
+    display: flex
+    gap: 10px
+    @media ($tablet)
+      position: static
+      order: 1
+  &__note
+    position: absolute
+    top: 125px
+    left: 0
+    width: 570px
+    max-width: 100%
+    @media ($tablet)
+      display: none
+  &__arrow
+    position: absolute
+    top: 110px
+    left: 444px
+    width: 122px
+    @media ($tablet)
+      display: none
+  &__sticker
+    position: absolute
+    top: 523px
+    left: 323px
+    width: 207px
+    @media ($tablet)
+      display: none
+  &__media
+    position: absolute
+    top: 0
+    right: 0
+    width: 1220px
+    height: 790px
+    @media ($tablet)
+      position: static
+      order: 2
+      width: 100%
+      height: 420px
+    @media ($mobile)
+      height: 320px
+  &__photo
+    width: 100%
+    height: 100%
+    object-fit: cover
+  &__chip
+    position: absolute
+    background: $lime
+    white-space: nowrap

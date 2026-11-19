@@ -2,26 +2,25 @@
 
 .videos
   position: relative
-  padding-block: 80px
   @media ($mobile)
     padding-block: 48px
   &__intro
     display: flex
     flex-direction: column
     align-items: center
-    gap: 24px
+    gap: 32px
     text-align: center
   &__title
     max-width: 920px
   &__lead
-    max-width: 640px
+    max-width: 600px
   &__rail
-    margin-top: 48px
+    margin-top: 60px
     @media ($mobile)
       margin-top: 24px
   &__list
     display: flex
-    gap: 20px
+    gap: 8px
     overflow-x: auto
     scrollbar-width: none
     padding-inline: 40px
@@ -34,35 +33,39 @@
     @media ($mobile)
       flex-basis: 220px
   &__nav
-    justify-content: space-between
-    width: 324px
-    margin: 32px auto 0
+    justify-content: center
+    gap: 200px
+    margin: 50px auto 0
     @media ($mobile)
-      width: 200px
-  &__stamp
+      gap: 60px
+      margin-top: 24px
+  &__sticker
     position: absolute
     pointer-events: none
-    &--choose
-      top: 40px
-      right: 180px
-      width: 220px
-      @media ($tablet)
-        right: 20px
-        width: 150px
-      @media ($mobile)
-        top: 0
-        right: 12px
-        width: 110px
-    &--traditions
-      top: 220px
-      left: 180px
+    &--100
+      top: 190px
+      left: 210px
       width: 196px
       @media ($tablet)
-        top: 180px
+        top: 120px
         left: 20px
-        width: 120px
+        width: 180px
       @media ($mobile)
-        display: none
+        top: 60px
+        left: 12px
+        width: 120px
+    &--local
+      top: -3px
+      right: 230px
+      width: 220px
+      @media ($tablet)
+        top: 200px
+        right: 20px
+        width: 160px
+      @media ($mobile)
+        top: 90px
+        right: 12px
+        width: 110px
 
 .video-card
   position: relative

@@ -2,13 +2,14 @@
   <div class="container videos__intro">
     <h2 class="section-title videos__title">{{ videos.title }}</h2>
     <p class="lead videos__lead">{{ videos.lead }}</p>
+    {% if videos.lead2 %}<p class="lead videos__lead">{{ videos.lead2 }}</p>{% endif %}
   </div>
   <div class="videos__rail" data-rail>
     <ul class="videos__list" data-rail-track>
       {% for card in videos.cards %}
       <li class="videos__item">
-        <button class="video-card" type="button" data-video-card aria-label="Видео о ярмарке{% if card.city %}, {{ card.city }}{% endif %}">
-          <img class="video-card__poster" src="assets/img/{{ card.poster }}.webp" alt="" width="296" height="580">
+        <button class="video-card" type="button" data-reel-toggle aria-label="Видео о ярмарке{% if card.city %}, {{ card.city }}{% endif %}">
+          <video class="video-card__media" src="assets/video/fair-reel.mp4" poster="assets/img/{{ card.poster }}.webp" muted loop playsinline preload="metadata" tabindex="-1"></video>
           <span class="chip video-card__city">{{ card.city | default(videos.unknownCity) }}</span>
         </button>
       </li>
@@ -23,6 +24,6 @@
       </button>
     </div>
   </div>
-  <img class="videos__stamp videos__stamp--choose" src="assets/img/stamp-choose-yours.svg" alt="" width="220" height="193">
-  <img class="videos__stamp videos__stamp--traditions" src="assets/img/stamp-traditions.svg" alt="" width="196" height="178">
+  <img class="videos__sticker videos__sticker--100" src="assets/img/sticker-100.svg" alt="" width="260" height="153">
+  <img class="videos__sticker videos__sticker--local" src="assets/img/sticker-local-manufacturers.png" alt="" width="230" height="145">
 </section>
