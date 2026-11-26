@@ -1,0 +1,107 @@
+@use "_vars" as *
+
+// В Figma 1280 и 768 — не промежуточные состояния, а отдельные композиции.
+// Эти правила удерживают базовую геометрию страниц, не давая desktop-сетке
+// переноситься и растягивать следующие секции.
+@media ($laptop-only)
+  .container
+    padding-inline: 40px
+
+  .hero
+    height: 953px
+    padding-top: 176px
+    padding-bottom: 0
+    &__container
+      grid-template-columns: 300px minmax(0, 1fr)
+      gap: 80px
+    &__title
+      font-size: 64px
+      line-height: 62px
+    &__accent
+      font-size: 68px
+      line-height: 68px
+    &__strip
+      height: 345px
+      margin-top: 46px
+    &__photo img
+      width: 306px
+      height: 345px
+
+  .page-hero
+    height: var(--hero-h)
+    padding-top: 180px
+    padding-bottom: 0
+  .main--contacts .page-hero,
+  .main--thanks .page-hero
+    --hero-h: 405px
+  .main--about .page-hero
+    --hero-h: 430px
+  .main--schedule .page-hero
+    --hero-h: 480px
+  .main--products .page-hero
+    --hero-h: 480px
+  .main--notfound .page-hero
+    --hero-h: 650px
+
+  .fair-card
+    flex-basis: 480px
+    &__article
+      min-height: 593px
+    &__photo
+      height: 240px
+    &__body
+      padding: 32px
+
+  .discount__card
+    grid-template-columns: 1fr
+    min-height: 788px
+  .discount__photo
+    height: 300px
+  .footer__card
+    min-height: 437px
+
+@media ($tablet-only)
+  .hero
+    height: 980px
+    padding-top: 155px
+    padding-bottom: 0
+    &__background
+      height: 360px
+    &__container
+      grid-template-columns: 240px minmax(0, 1fr)
+      gap: 40px
+    &__title
+      font-size: 52px
+      line-height: 52px
+    &__accent
+      font-size: 56px
+      line-height: 56px
+    &__strip
+      height: 300px
+      margin-top: 44px
+    &__photo img
+      width: 260px
+      height: 294px
+
+  .page-hero
+    padding-top: 120px
+    padding-bottom: 0
+  .main--contacts .page-hero
+    height: 333px
+  .main--thanks .page-hero
+    height: 351px
+  .main--about .page-hero
+    height: 439px
+  .main--schedule .page-hero
+    height: 500px
+  .main--products .page-hero
+    height: 580px
+  .main--notfound .page-hero
+    height: 620px
+
+  .fair-card
+    flex-basis: 354px
+    &__article
+      min-height: 0
+  .footer__card
+    min-height: 484px

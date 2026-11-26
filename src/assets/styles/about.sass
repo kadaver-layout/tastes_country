@@ -24,7 +24,9 @@
     padding: 40px
     border-radius: 16px
     @media ($desktop)
-      min-height: 513px
+      // Три карточки вместе с наклоном занимают 533 px; это даёт
+      // целевую высоту секции values 813 px из макета 1920.
+      min-height: 461px
     @media ($tablet)
       transform: none !important
       margin-top: 0 !important

@@ -72,13 +72,18 @@ const path = {
   },
 };
 
-function serverStart() {
+function serverStart(done) {
   server.init({
     server: { baseDir: path.dist.base, mimeTypes: { woff: "font/woff", woff2: "font/woff2", ttf: "font/ttf", mp4: "video/mp4" } },
+    port: 3000,
+    host: "127.0.0.1",
+    listen: "127.0.0.1",
+    open: false,
+    ui: false,
     notify: false,
-    online: true,
+    online: false,
     snippetOptions: { rule: { fn: (snippet, match) => `<script async src="/browser-sync/browser-sync-client.js?v=3.0.4"></script>${match}` } },
-  });
+  }, done);
 }
 
 async function clean() {
@@ -262,7 +267,7 @@ function fonts() {
     .pipe(server.reload({ stream: true }));
 }
 
-function watch() {
+function watch(done) {
   gulp.watch(path.watch.html, html);
   gulp.watch(path.watch.htmlRaw, htmlRaw);
   gulp.watch(path.watch.data, html);
@@ -271,10 +276,17 @@ function watch() {
   gulp.watch(path.watch.image, image);
   gulp.watch(path.watch.video, video);
   gulp.watch(path.watch.fonts, fonts);
+  // Watchers продолжают удерживать event loop, но сама задача уже настроена.
+  // Без callback Gulp 5 считает её незавершённой и сообщает AggregateError.
+  done();
 }
 
 const build = gulp.series(clean, gulp.parallel(html, htmlRaw, scss, js, jsRaw, image, video, fonts));
 const dev = gulp.series(build, gulp.parallel(watch, serverStart));
 
 export { build, dev };
-export default dev;
+// `npm run prod` передаёт флаг `--prod`, но раньше всё равно вызывал
+// default-задачу dev: после сборки запускались watch и BrowserSync, из-за чего
+// Gulp завершался AggregateError. В production default должен быть одноразовой
+// сборкой, а режим разработки — оставаться интерактивным.
+export default (isProd() ? build : dev);

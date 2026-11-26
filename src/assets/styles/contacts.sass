@@ -1,6 +1,10 @@
 @use "_vars" as *
 
 .care
+  // Высота секции в desktop-макете Figma — 606 px. Явное значение
+  // сохраняет положение следующих секций при изменении содержимого контактов.
+  @media ($desktop)
+    min-height: 606px
   @media ($mobile)
     padding-block: 48px 24px
   &__container

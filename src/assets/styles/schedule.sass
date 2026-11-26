@@ -33,6 +33,10 @@
       background: $green-nav
 
 .schedule
+  // В макете 1920 таблица вместе с управляющими элементами имеет 929 px.
+  // Минимальная высота не влияет на компактные варианты таблицы.
+  @media ($desktop)
+    min-height: 929px
   @media ($mobile)
     padding-block: 32px
   &__title
