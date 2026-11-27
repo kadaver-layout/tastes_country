@@ -4,9 +4,9 @@
     <div class="featured__card" data-rail data-rail-mode="slide">
       <ul class="featured__list" data-rail-track>
         {% for product in featuredProducts %}
-        <li class="featured__slide">
-          <div class="featured__media">
-            <img class="featured__photo" src="assets/img/{{ product.photo }}.webp" alt="{{ product.alt }}">
+        <li class="featured__slide featured__slide--{{ loop.index }}">
+          <div class="featured__media" data-reel-toggle>
+            <video class="featured__photo" src="assets/video/fair-reel.mp4" poster="assets/img/{{ product.photo }}.webp" muted loop playsinline preload="metadata" tabindex="-1" aria-label="{{ product.alt }}"></video>
           </div>
           <div class="featured__info">
             <img class="featured__blob" src="assets/img/blob.svg" alt="" aria-hidden="true">
@@ -24,14 +24,6 @@
                 </div>
               </dl>
             </div>
-            <div class="rail-nav featured__nav">
-              <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущий продукт">
-                <img src="assets/img/arrow-left.svg" alt="">
-              </button>
-              <button class="rail-button" type="button" data-rail-next aria-label="Следующий продукт">
-                <img src="assets/img/arrow-right.svg" alt="">
-              </button>
-            </div>
           </div>
           <div class="featured__cutout">
             <img class="featured__outline" src="assets/img/{{ product.outline }}.svg" alt="" aria-hidden="true">
@@ -40,6 +32,14 @@
         </li>
         {% endfor %}
       </ul>
+      <div class="rail-nav featured__nav">
+        <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущий продукт">
+          <img src="assets/img/arrow-left.svg" alt="">
+        </button>
+        <button class="rail-button" type="button" data-rail-next aria-label="Следующий продукт">
+          <img src="assets/img/arrow-right.svg" alt="">
+        </button>
+      </div>
     </div>
   </div>
 </section>

@@ -135,9 +135,17 @@
     font-size: 16px
     line-height: 20px
     color: $yellow
+    &:focus
+      outline: 2px solid $green-pale
+      outline-offset: 2px
+    &.is-success
+      color: $green-pale
   &__submit
     width: 100%
     margin-top: 12px
+    &[aria-busy="true"]
+      opacity: 0.7
+      cursor: progress
   &__stamp
     position: absolute
     top: 280px

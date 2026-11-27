@@ -2,11 +2,11 @@
   <article class="fair-card__article {{ cardModifier | default('') }}">
     <div class="fair-card__media">
       <img class="fair-card__photo" src="assets/img/{{ fair.photo }}.webp" alt="{{ fair.alt }}" width="600" height="340">
+    </div>
+    <div class="fair-card__body">
       {% if fair.status %}
       <p class="chip fair-card__status">{{ fair.status }}</p>
       {% endif %}
-    </div>
-    <div class="fair-card__body">
       <h3 class="card-title fair-card__city">{{ fair.city }}</h3>
       <p class="fair-card__address">{{ fair.address }}</p>
       <dl class="fair-card__details">
@@ -20,9 +20,12 @@
         </div>
       </dl>
       <div class="fair-card__actions">
-        <button class="button {% if cardModifier == 'fair-card--featured' %}button--green{% else %}button--lime{% endif %} fair-card__button" type="button" data-open-dialog="discount-dialog">{{ fairs.discountLabel }}</button>
+        <button class="button {% if cardModifier == 'fair-card--featured' %}button--orange{% else %}button--lime{% endif %} fair-card__button" type="button" data-open-dialog="discount-dialog">{{ fairs.discountLabel }}</button>
         <a class="button button--cream fair-card__button" href="{{ fair.routeUrl | default('#') }}">{{ fairs.routeLabel }}</a>
       </div>
     </div>
   </article>
+  {% if cardStamp %}
+  <img class="nearby-fairs__stamp" src="assets/img/stamp-manufacturers.svg" alt="" width="200" height="180">
+  {% endif %}
 </li>

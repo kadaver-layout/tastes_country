@@ -1,9 +1,10 @@
 <section class="nearby-fairs">
   <div class="container nearby-fairs__container">
-    <h2 class="section-title nearby-fairs__title">{{ fairsHeading | default(fairs.title) }}</h2>
+    <h2 class="section-title nearby-fairs__title">{% if fairsDesktopHeading %}<span class="nearby-fairs__heading--adaptive">{{ fairs.title }}</span><span class="nearby-fairs__heading--desktop">{{ fairsDesktopHeading }}</span>{% else %}{{ fairsHeading | default(fairs.title) }}{% endif %}</h2>
     <div class="nearby-fairs__rail" data-rail>
       <ul class="nearby-fairs__list" data-rail-track>
         {% for fair in fairs.cards %}
+        {% set cardStamp = loop.first %}
         {% include "includes/fair-card.html" %}
         {% endfor %}
       </ul>
@@ -16,6 +17,5 @@
         </button>
       </div>
     </div>
-    <img class="nearby-fairs__stamp" src="assets/img/stamp-manufacturers.svg" alt="" width="200" height="180">
   </div>
 </section>

@@ -1,6 +1,11 @@
 @use "_vars" as *
 
 .categories
+  // В макете волна промо-блока уходит ПОД секцию категорий: непрозрачный фон
+  // цвета страницы + слой выше промо.
+  position: relative
+  z-index: 2
+  background: $cream-page
   &__intro
     display: grid
     justify-items: center

@@ -4,23 +4,23 @@
   // Вырезки в макете выходят за край фрейма — обрезаем по секции.
   overflow: hidden
   @media ($mobile)
-    padding-block: 24px 32px
+    padding-block: 0
   &__stage
     position: relative
     width: 100vw
     margin-inline: calc(50% - 50vw)
     @media ($mobile)
-      display: grid
-      grid-template-columns: 1fr 1fr
-      gap: 12px
-      aspect-ratio: auto !important
+      width: calc(100% - 40px)
+      margin-inline: auto
+      height: 492px
   &__copy
     position: absolute
     @media ($mobile)
-      position: static
-      grid-column: 1 / -1
+      position: absolute
+      top: 0 !important
+      left: 0 !important
       width: auto !important
-      margin-bottom: 8px
+      z-index: 1
   &__lead
     margin-top: 32px
     @media ($mobile)
@@ -28,5 +28,18 @@
   &__item
     position: absolute
     @media ($mobile)
-      position: static
-      width: 100% !important
+      display: none
+  @media ($mobile)
+    &#spices &__item:nth-of-type(2), &#spices &__item:nth-of-type(4), &#tea &__item:nth-of-type(2), &#tea &__item:nth-of-type(4)
+      display: block
+      position: absolute
+      top: 145px !important
+      left: -43% !important
+      width: 120% !important
+    &#spices &__item:nth-of-type(2), &#tea &__item:nth-of-type(2)
+      left: 48% !important
+      width: 102% !important
+    &#spices &__item:nth-of-type(4)
+      transform: rotate(145deg)
+    &#tea &__stage
+      height: 499px

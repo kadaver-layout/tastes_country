@@ -1,13 +1,14 @@
 @use "_vars" as *
 
 // В Figma 1280 и 768 — не промежуточные состояния, а отдельные композиции.
-// Эти правила удерживают базовую геометрию страниц, не давая desktop-сетке
-// переноситься и растягивать следующие секции.
+// Селекторы адаптивных слоёв усилены префиксом body: postcss-sort-media-queries
+// меняет порядок медиа-блоков, и без запаса специфичности базовые max-width
+// правила перебивали бы композиции по порядку, а не по смыслу.
 @media ($laptop-only)
-  .container
-    padding-inline: 40px
+  body .container
+    padding-inline: clamp(20px, calc(20px + (100vw - 1280px) * 0.03125), 40px)
 
-  .hero
+  body .hero
     height: 953px
     padding-top: 176px
     padding-bottom: 0
@@ -27,23 +28,23 @@
       width: 306px
       height: 345px
 
-  .page-hero
+  body .page-hero
     height: var(--hero-h)
     padding-top: 180px
     padding-bottom: 0
-  .main--contacts .page-hero,
-  .main--thanks .page-hero
+  body .main--contacts .page-hero,
+  body .main--thanks .page-hero
     --hero-h: 405px
-  .main--about .page-hero
+  body .main--about .page-hero
     --hero-h: 430px
-  .main--schedule .page-hero
+  body .main--schedule .page-hero
+    --hero-h: 390px
+  body .main--products .page-hero
     --hero-h: 480px
-  .main--products .page-hero
-    --hero-h: 480px
-  .main--notfound .page-hero
+  body .main--notfound .page-hero
     --hero-h: 650px
 
-  .fair-card
+  body .fair-card
     flex-basis: 480px
     &__article
       min-height: 593px
@@ -51,17 +52,296 @@
       height: 240px
     &__body
       padding: 32px
+    &__address
+      font-size: 18px
+      line-height: 24px
+    &__details dt
+      font-size: 16px
+      line-height: 23px
+    &__details dd
+      font-size: 24px
+      line-height: 26.4px
+    &__actions
+      padding-top: 32px
 
-  .discount__card
-    grid-template-columns: 1fr
-    min-height: 788px
-  .discount__photo
-    height: 300px
-  .footer__card
-    min-height: 437px
+  body .footer
+    &__card
+      min-height: 417px
+      padding: 50px 40px 20px
+    &__bottom
+      margin-top: 128px
+      font-size: 16px
+      line-height: 20px
+    &__contacts
+      gap: 24px
+    &__socials img
+      width: 48px
+      height: 48px
+
+  // === Композиция 1280: размеры блоков сняты с frame «1280 | *» ===
+  body .rail-button
+    width: 50px
+    height: 50px
+    img
+      width: 48px
+      height: 48px
+
+  body .section-title
+    font-size: 40px
+    line-height: 40px
+  body .lead
+    font-size: 18px
+    line-height: 24px
+
+  body .featured
+    &__slide
+      height: 660px
+    &__media
+      width: 400px
+    &__info
+      top: 30px
+      left: 440px
+      width: 600px
+      height: 600px
+    &__content
+      top: 129px
+      left: 95px
+      width: 410px
+    &__nav
+      top: 570px
+      left: 634px
+      gap: 120px
+    &__cutout
+      top: 0
+      right: -20px
+      width: 280px
+      height: 310px
+    &__slide--2 .featured__cutout
+      top: 212px
+      right: -257px
+      width: 687px
+      height: 560px
+    &__slide--3 .featured__cutout
+      top: 150px
+      right: 0
+      width: 325px
+      height: 367px
+
+  body .producers
+    &__card
+      height: 660px
+    &__info
+      top: 30px
+      left: 30px
+      width: 600px
+      height: 600px
+    &__content
+      top: 129px
+      left: 95px
+      width: 410px
+    &__nav
+      top: 540px
+      left: 194px
+    &__gallery
+      width: 620px
+      height: 660px
+    &__sticker--lime
+      top: 100px
+      left: 470px
+      width: 80px
+    &__sticker--red
+      top: 499px
+      left: 37px
+      width: 100px
+
+  body .videos
+    &__intro
+      gap: 24px
+    &__lead
+      max-width: 500px
+    &__rail
+      margin-top: 40px
+    &__item
+      flex-basis: 220px
+    &__nav
+      gap: 120px
+      margin-top: 30px
+    &__sticker--100
+      top: 128px
+      left: 140px
+      width: 150px
+    &__sticker--local
+      top: -7px
+      right: 160px
+      width: 150px
+  body .video-card video
+    height: 400px
+
+  body .category-card
+    height: 200px
+    &__title
+      left: 24px
+      bottom: 24px
+      font-size: 24px
+      line-height: 26.4px
+
+  body .promo
+    &__content
+      width: 580px
+      margin-left: 330px
+    &__lead
+      margin-top: 24px
+      max-width: 580px
+    &__button
+      margin-top: 40px
+      min-height: 76px
+    &__sticker--discount
+      top: 70px
+      left: 150px
+      width: 150px
+    &__sticker--promocode
+      top: 140px
+      right: 120px
+      width: 250px
+
+  body .discount
+    &__card
+      grid-template-columns: 620px minmax(0, 1fr)
+      min-height: 788px
+    &__photo
+      height: 788px
+    &__content
+      padding: 80px 60px
+    &__form
+      gap: 12px
+    &__field
+      min-height: 64px
+    &__submit
+      min-height: 64px
+    &__consent
+      font-size: 14px
+      line-height: 18px
+    &__checkbox
+      width: 20px
+      height: 20px
+    &__stamp
+      top: 38px
+      width: 116px
+
+  body .coverage
+    padding-block: 0
+    min-height: 497px
+    &__intro
+      max-width: 400px
+    &__stat
+      margin-top: 40px
+      font-size: 28px
+      line-height: 29.4px
+    &__map
+      top: -100px
+      transform: none
+      width: 840px
+
+  body .nearby-fairs
+    &__title
+      margin-bottom: 40px
+    &__nav
+      margin-top: 40px
+      gap: 120px
+
+  body .care
+    &__container
+      gap: 50px
+    &__intro
+      gap: 24px
+      max-width: 640px
+    &__contacts
+      gap: 30px 20px
+    &__value
+      font-size: 24px
+      line-height: 26.4px
+    &__note
+      font-size: 18px
+      line-height: 24px
+
+  body .departments
+    &__title
+      margin-bottom: 40px
+    &__list
+      gap: 32px
+  body .department
+    min-height: 0
+    gap: 12px
+    &__label
+      margin-top: 12px
+    &__text, &__label
+      font-size: 18px
+      line-height: 24px
+    &__phone
+      font-size: 24px
+      line-height: 26.4px
+    &__email
+      font-size: 18px
+      line-height: 24px
+
+  body .schedule
+    &__title
+      margin-bottom: 40px
+    &__card
+      padding: 40px 40px 32px
+    &__rows
+      gap: 24px
+      margin-top: 24px
+    &__bar
+      height: 56px
+    &__city
+      font-size: 24px
+      line-height: 26.4px
+    &__address
+      font-size: 16px
+      line-height: 20px
+    &__day
+      height: 50px
+      &--today
+        width: 50px
+    &__header
+      padding-bottom: 12px
+    &__nav
+      margin-top: 40px
+      gap: 120px
+
+  body .gallery
+    &__intro
+      gap: 24px
+      margin-bottom: 40px
+      max-width: 600px
+    &__item img
+      height: 570px
+    &__nav
+      gap: 120px
+      margin: 40px auto 0
+    &__sticker--100
+      top: 180px
+      width: 199px
+    &__sticker--local
+      top: 106px
+      width: 182px
+
+  body .faq
+    &__list
+      gap: 20px
+    &__details
+      padding: 40px
+    &__question
+      font-size: 28px
+      line-height: 29.4px
+    &__answer
+      margin-top: 12px
+      font-size: 20px
+      line-height: 24px
 
 @media ($tablet-only)
-  .hero
+  body .hero
     height: 980px
     padding-top: 155px
     padding-bottom: 0
@@ -83,25 +363,1322 @@
       width: 260px
       height: 294px
 
-  .page-hero
+  body .page-hero
     padding-top: 120px
     padding-bottom: 0
-  .main--contacts .page-hero
+  body .main--contacts .page-hero
     height: 333px
-  .main--thanks .page-hero
+  body .main--thanks .page-hero
     height: 351px
-  .main--about .page-hero
+  body .main--about .page-hero
     height: 439px
-  .main--schedule .page-hero
-    height: 500px
-  .main--products .page-hero
+  body .main--schedule .page-hero
+    height: 379px
+  body .main--products .page-hero
     height: 580px
-  .main--notfound .page-hero
+  body .main--notfound .page-hero
     height: 620px
 
-  .fair-card
+  body .fair-card
     flex-basis: 354px
     &__article
       min-height: 0
-  .footer__card
+  body .footer__card
     min-height: 484px
+
+  // === Композиция 768: размеры сняты с frame «768 | *» ===
+  body .section-title
+    font-size: 40px
+    line-height: 40px
+  body .lead
+    font-size: 18px
+    line-height: 24px
+  body .rail-button
+    width: 50px
+    height: 50px
+    img
+      width: 48px
+      height: 48px
+
+  body .featured
+    &__slide
+      height: 600px
+      min-height: 0
+    &__info
+      top: 50px
+      left: 114px
+      width: 500px
+      height: 500px
+      padding: 0
+    &__blob
+      inset: 0
+      width: 100%
+      height: 100%
+      transform: none
+    &__content
+      top: 108px
+      left: 79px
+      width: 342px
+      max-width: none
+    &__cutout
+      top: 0
+      right: 20px
+      width: 280px
+      height: 310px
+
+  body .producers
+    &__card
+      display: flex
+      flex-direction: column
+      height: auto
+      padding-bottom: 80px
+    &__gallery
+      position: static
+      order: -1
+      width: 100%
+      height: 580px
+    &__nav
+      position: static
+      order: 0
+      width: 220px
+      margin: 29px auto 0
+    &__info
+      position: static
+      order: 1
+      width: 500px
+      height: 500px
+      margin: 30px auto 0
+      padding: 0
+    &__blob
+      inset: 0
+      width: 100%
+      height: 100%
+      transform: none
+    &__content
+      top: 108px
+      left: 79px
+      width: 342px
+      max-width: none
+    &__sticker--lime
+      top: 709px
+      left: auto
+      right: 40px
+      width: 80px
+    &__sticker--red
+      top: 1031px
+      left: 40px
+      width: 102px
+    &__photo img
+      height: 580px
+
+  body .videos
+    &__intro
+      gap: 24px
+    &__lead
+      max-width: 500px
+    &__rail
+      margin-top: 40px
+    &__item
+      flex-basis: 220px
+    &__nav
+      gap: 120px
+      margin-top: 30px
+  body .video-card video
+    height: 400px
+
+  body .categories
+    &__list
+      gap: 10px
+  body .category-card
+    height: 200px
+
+  body .promo
+    &__content
+      width: 580px
+      margin-inline: auto
+    &__lead
+      margin-top: 24px
+    &__button
+      margin-top: 32px
+      min-height: 62px
+    &__sticker--discount
+      top: 79px
+      left: 20px
+      width: 120px
+    &__sticker--promocode
+      top: 166px
+      right: 20px
+      width: 210px
+
+  body .coverage
+    position: relative
+    min-height: 954px
+    padding-block: 0
+    &__map
+      position: absolute
+      top: 130px
+      right: -112px
+      transform: none
+      width: 840px
+      margin: 0
+    &__stat
+      position: absolute
+      left: 20px
+      bottom: 109px
+      margin-top: 0
+    &__button
+      position: absolute
+      left: 20px
+      bottom: 0
+
+  body .discount
+    &__card
+      grid-template-columns: 1fr
+      min-height: 0
+    &__photo
+      height: 420px
+    &__content
+      padding: 40px 20px
+    &__form
+      gap: 12px
+    &__field
+      min-height: 64px
+    &__submit
+      min-height: 64px
+
+  body .benefits
+    &__list
+      gap: 16px
+  body .benefit-card
+    padding: 28px
+    &__title
+      font-size: 28px
+      line-height: 29.4px
+    &__text
+      margin-top: 12px
+      font-size: 16px
+      line-height: 22.4px
+
+  body .nearby-fairs
+    &__title
+      margin-bottom: 40px
+    &__nav
+      margin-top: 40px
+      gap: 120px
+
+  body .footer
+    &__card
+      padding: 40px 32px 24px
+    &__bottom
+      margin-top: 40px
+      font-size: 16px
+      line-height: 20px
+    &__link
+      font-size: 20px
+      line-height: 24px
+    &__contacts
+      gap: 24px
+
+@media ($mobile)
+  // === Композиция 375: размеры сняты с frame «375 | *» ===
+  body .featured
+    &__slide
+      height: 530px
+      min-height: 0
+    &__media
+      display: none
+    &__info
+      position: absolute
+      top: 40px
+      left: 20px
+      width: 275px
+      height: 334px
+      padding: 0
+      order: 0
+    &__blob
+      inset: 0
+      width: 100%
+      height: 100%
+      transform: none
+    &__content
+      position: static
+      width: auto
+      max-width: none
+    &__title
+      font-size: 24px
+      line-height: 26px
+    &__description
+      margin-top: 12px
+      font-size: 16px
+      line-height: 22px
+    &__details
+      margin-top: 24px
+    &__cutout
+      position: absolute
+      top: 272px
+      right: 20px
+      width: 160px
+      height: 177px
+      margin: 0
+      order: 0
+
+  body .producers
+    &__card
+      display: flex
+      flex-direction: column
+      height: auto
+      padding-bottom: 40px
+    &__gallery
+      position: static
+      order: -1
+      width: 100%
+      height: 320px
+    &__nav
+      position: static
+      order: 0
+      width: 200px
+      margin: 12px auto 0
+    &__info
+      position: static
+      order: 1
+      display: flex
+      flex-direction: column
+      width: 275px
+      height: auto
+      margin: 12px auto 0
+      padding: 0
+    &__nav
+      order: -1
+      margin: 0 auto 32px
+    &__blob
+      display: none
+    &__content
+      position: static
+      width: auto
+      max-width: none
+    &__sticker--lime
+      top: 365px
+      left: auto
+      right: 20px
+      width: 61px
+    &__sticker--red
+      top: 0
+      left: auto
+      right: 20px
+      width: 90px
+    &__photo img
+      height: 320px
+
+  body .videos
+    padding-block: 0
+    &__intro
+      gap: 16px
+    &__lead
+      font-size: 14px
+      line-height: 20px
+    &__rail
+      margin-top: 32px
+    &__item
+      flex-basis: 220px
+    &__nav
+      gap: 120px
+      margin-top: 20px
+    &__sticker--100
+      top: 38px
+      left: 12px
+      width: 110px
+  body .video-card video
+    height: 400px
+
+  body .categories
+    &__list
+      gap: 10px
+
+  body .promo
+    padding-top: 77px
+    padding-bottom: 0
+    &__title
+      font-size: 26px
+      line-height: 32px
+    &__lead
+      margin-top: 16px
+    &__button
+      margin-top: 24px
+      min-height: 56px
+    &__sticker--discount
+      top: 0
+      left: 0
+      width: 86px
+    &__sticker--promocode
+      top: 252px
+      right: 0
+      width: 151px
+
+  body .benefits
+    &__list
+      display: block
+      position: relative
+      height: 861px
+    &__stamp--regional
+      top: 204px
+      left: auto
+      right: 0
+      bottom: auto
+      width: 121px
+    &__stamp--farmers
+      top: 553px
+      left: auto
+      right: 0
+      bottom: auto
+      width: 124px
+  body .benefit-card
+    position: absolute
+    left: 0
+    right: 0
+    width: auto
+    height: auto
+    transform: none
+    &--assortment
+      top: 0
+    &--support
+      top: 256px
+    &--tasting
+      top: 426px
+    &--standards
+      top: 617px
+
+  body .coverage
+    position: relative
+    min-height: 669px
+    padding-block: 0
+    &__map
+      position: absolute
+      top: 140px
+      right: -130px
+      transform: none
+      width: 505px
+      margin: 0
+    &__stat
+      position: absolute
+      left: 20px
+      bottom: 93px
+      margin-top: 0
+    &__button
+      position: absolute
+      left: 20px
+      bottom: 0
+
+  body .discount
+    &__photo
+      height: 200px
+    &__content
+      padding: 32px 20px
+    &__form
+      gap: 12px
+    &__field
+      min-height: 64px
+    &__submit
+      min-height: 56px
+    &__consent
+      font-size: 12px
+      line-height: 16px
+    &__stamp
+      top: 160px
+      width: 98px
+  body .ts-wrapper.single .ts-control
+    padding: 14px 16px
+    font-size: 16px
+    line-height: 20px
+
+  body .nearby-fairs
+    &__title
+      margin-bottom: 32px
+    &__list
+      padding-top: 60px
+      margin-top: -60px
+    &__stamp
+      top: -60px
+  body .fair-card
+    &__article
+      min-height: 0
+
+  body .footer
+    &__card
+      padding: 32px 20px
+    &__top
+      gap: 24px
+    &__bottom
+      margin-top: 32px
+    &__link
+      font-size: 18px
+      line-height: 21.6px
+    &__list
+      gap: 12px
+    &__contacts
+      gap: 16px
+
+// === QA2-03/06: доводка композиций products и плавные промежуточные ширины ===
+@media ($laptop-only)
+  // Без скачка 660→910 на границе 1920: высота интерполируется по ширине.
+  body .featured__slide
+    height: clamp(660px, calc(660px + (100vw - 1280px) * 0.390625), 910px)
+  body .producers__card
+    height: clamp(660px, calc(660px + (100vw - 1280px) * 0.390625), 910px)
+  body .video-card video
+    height: clamp(400px, calc(400px + (100vw - 1280px) * 0.28125), 580px)
+  body .promo__lead
+    max-width: 520px
+  body .discount__content
+    padding: 80px 60px 88px
+  body .footer__contacts .footer__label
+    margin-bottom: 0
+  body .main--products .page-hero
+    --hero-h: 374px
+  body .showcase
+    padding-block: 0
+    &__container
+      min-height: 530px
+    &__media
+      width: 820px
+    &__photo
+      height: 530px
+    &__accent
+      top: 34px
+      width: 465px
+    &__sticker
+      top: 211px
+      left: auto
+      right: 240px
+      width: 147px
+  body .products-intro
+    &__stage
+      height: 530px
+    &__media
+      width: 820px
+      height: 530px
+  body .categories__intro
+    margin-bottom: 40px
+  body .platter
+    &__container
+      height: 936px
+    &__copy
+      width: 600px
+    &__plate
+      top: 166px
+      width: 740px
+      height: 770px
+  body .collage__stage
+    height: 710px
+  // Блочные высоты из Figma там, где контент ниже эталона.
+  body .promo
+    min-height: 333px
+  body .discount
+    min-height: 788px
+  body .footer
+    min-height: 437px
+
+@media ($tablet-only)
+  body .main--products .page-hero
+    height: 401px
+  body .showcase
+    padding-block: 0
+    &__container
+      gap: 0
+    &__photo
+      height: 470px
+    &__accent
+      width: 377px
+  body .products-intro
+    &__stage
+      gap: 0
+    &__actions
+      position: absolute
+      top: -60px
+      right: 20px
+    &__media
+      height: 470px
+      margin-top: 68px
+  body .categories__intro
+    margin-bottom: 30px
+  body .platter
+    &__container
+      gap: 20px
+    &__copy
+      width: 500px
+      margin-inline: auto
+    &__title
+      font-size: 35px
+      line-height: 35px
+    &__lead
+      margin-top: 16px
+    &__plate
+      aspect-ratio: auto
+      width: 740px !important
+      max-width: none
+      height: 770px !important
+      margin-inline: -6px
+    &__label
+      position: absolute
+      width: 1px !important
+      height: 1px
+      overflow: hidden
+      clip-path: inset(50%)
+      &:focus-visible
+        z-index: 5
+        left: 0 !important
+        top: 0 !important
+        width: auto !important
+        height: auto
+        clip-path: none
+  body .collage__stage
+    height: 560px
+  body .promo__title br
+    display: none
+  body .benefits__list
+    gap: 20px
+  body .benefit-card
+    padding: 32px
+    &__text
+      margin-top: 16px
+  body .videos__nav
+    margin-top: 20px
+  // Блочные высоты из Figma там, где контент ниже эталона.
+  body .producers
+    min-height: 1270px
+  body .benefits
+    min-height: 484px
+  body .promo
+    min-height: 249px
+  body .videos
+    min-height: 675px
+  body .footer
+    min-height: 484px
+
+@media ($mobile)
+  body .main--products .page-hero
+    height: 367px
+    padding-top: 155px
+    &__background
+      height: 263px
+  body .showcase
+    padding-block: 0
+    &__container
+      min-height: 0
+      gap: 0
+    &__photo
+      height: 289px
+      margin-top: 67px
+    &__accent
+      position: absolute
+      top: -22px
+      left: 0
+      width: 269px
+    &__sticker
+      display: none
+    &__chip
+      min-height: 34px
+      font-size: 14px
+  body .products-intro
+    &__stage
+      gap: 0
+    &__actions
+      position: absolute
+      top: -45px
+      left: 20px
+      right: auto
+    &__media
+      height: 289px
+      margin-top: 67px
+    &__note
+      display: block
+      position: absolute
+      top: -22px
+      width: 269px
+    &__arrow, &__sticker
+      display: none
+  body .categories__intro
+    gap: 8px
+    margin-bottom: 24px
+  body .platter
+    padding-block: 0
+    &__container
+      gap: 20px
+    &__lead
+      margin-top: 12px
+      line-height: 21.6px
+    &__title
+      font-size: 24px
+      line-height: 26.4px
+    &__plate
+      aspect-ratio: auto
+      width: 448px !important
+      max-width: none
+      height: 466px !important
+      margin-inline: -56px
+    &__label
+      position: absolute
+      width: 1px !important
+      height: 1px
+      overflow: hidden
+      clip-path: inset(50%)
+      &:focus-visible
+        z-index: 5
+        left: 0 !important
+        top: 0 !important
+        width: auto !important
+        height: auto
+        clip-path: none
+  body .collage__title
+    font-size: 24px
+    line-height: 26.4px
+  body .hero
+    height: 939px
+  body .fair-card
+    &__photo
+      height: 160px
+    &__body
+      padding: 20px
+    &__details
+      margin-top: 16px
+    &__actions
+      padding-top: 16px
+  body .producers__card
+    padding-bottom: 0
+  body .discount
+    padding-block: 0
+    &__content
+      padding: 40px 30px
+    &__title
+      font-size: 24px
+      line-height: 26.4px
+    &__lead
+      margin-top: 12px
+      font-size: 16px
+      line-height: 21.6px
+    &__form
+      gap: 5px
+      margin-top: 32px
+    &__field
+      min-height: 52px
+      padding: 14px 30px
+      font-size: 14px
+      line-height: 18px
+      border-radius: 4px
+    &__submit
+      min-height: 53px
+      margin-top: 0
+    &__consent
+      gap: 20px
+      font-size: 13px
+      line-height: 16.25px
+  body .ts-wrapper.single .ts-control
+    min-height: 58px
+    padding: 18px 30px
+    font-size: 14px
+    line-height: 18px
+    border-radius: 4px
+  body .discount__form > .ts-wrapper
+    min-height: 0
+    padding: 0
+  body .footer
+    &__card
+      padding: 24px 20px
+    &__top
+      gap: 16px
+    &__list
+      gap: 8px
+    &__contacts
+      gap: 12px
+    &__bottom
+      margin-top: 24px
+  // Блочные высоты из Figma там, где контент ниже эталона.
+  body .producers
+    min-height: 648px
+  body .promo
+    min-height: 346px
+  body .videos
+    min-height: 670px
+  body .nearby-fairs
+    min-height: 725px
+
+// Отдельные размеры таблицы из планшетного и ноутбучного макетов.
+@media ($tablet-only)
+  body .schedule
+    &__title
+      max-width: 493px
+      font-size: 35px
+      line-height: 35px
+      margin-bottom: 30px
+    &__card
+      padding: 20px 20px 24px
+    &__day
+      height: 44px
+      &--today
+        width: 44px
+    &__header
+      padding-bottom: 0
+    &__rows
+      gap: 24px
+      margin-top: 32px
+    &__row
+      min-height: 80px
+    &__bar
+      height: 72px
+    &__nav
+      margin-top: 32px
+
+@media ($laptop-only)
+  body .schedule
+    &__header, &__row
+      grid-template-columns: 260px repeat(7, minmax(0, 1fr))
+    &__rows
+      --col: calc((100% - 260px - 56px) / 7)
+      --info: 268px
+      margin-top: 40px
+    &__row
+      min-height: 85px
+    &__bar
+      height: 80px
+
+@media ($tablet-only)
+  body .values
+    &__intro
+      max-width: 460px
+      margin-bottom: 40px
+    &__title
+      font-size: 35px
+      line-height: 35px
+    &__list
+      grid-template-columns: repeat(2, 1fr)
+      gap: 0 0
+    &__card
+      min-height: 272px
+      &:last-child
+        grid-column: 1 / -1
+        width: 50%
+        justify-self: center
+        margin-top: -24px !important
+    &__sticker
+      display: block
+      width: 150px
+      top: auto
+      bottom: 170px
+      &--craft
+        left: auto
+        right: 20px
+      &--family
+        left: 40px
+
+@media ($laptop-only)
+  body .values__card
+    min-height: 270px
+
+@media ($mobile)
+  body .values__card + .values__card
+    margin-top: -24px !important
+  body .platter__image
+    transform: scale(1.17)
+
+@media ($mobile)
+  body .main--contacts .page-hero
+    height: auto
+    min-height: 303px
+    padding-top: 155px
+    padding-bottom: 14px
+  body .main--about .page-hero
+    height: 423px
+    padding-top: 155px
+  body .main--schedule .page-hero
+    height: 359px
+    padding-top: 128px
+  body .main--notfound .page-hero
+    height: 517px
+    padding-top: 112px
+
+@media ($tablet-only)
+  body .departments__title
+    font-size: 35px
+    line-height: 35px
+    margin-bottom: 40px
+  body .department
+    &__title
+      font-size: 24px
+      line-height: 26.4px
+    &__text, &__label, &__email
+      font-size: 18px
+      line-height: 24px
+
+@media ($mobile)
+  body .care__title, body .departments__title
+    font-size: 26px
+    line-height: 26px
+  body .care__intro
+    gap: 12px
+  body .departments__title
+    margin-bottom: 40px
+  body .department__text
+    margin-top: 8px
+  body .department__phone
+    margin-top: 4px
+
+@media ($laptop-only)
+  body .values__intro
+    max-width: 600px
+    margin-bottom: 70px
+
+@media ($tablet-only)
+  body .values__intro
+    row-gap: 12px
+  body .values__title
+    margin-bottom: 12px
+    font-size: 32px
+    line-height: 35.2px
+
+@media ($mobile)
+  body .values__title
+    font-size: 24px
+    line-height: 26.4px
+
+@media ($laptop-only), ($tablet-only)
+  body .discount
+    &__content
+      padding: 80px
+    &__lead
+      margin-top: 20px
+    &__form
+      gap: 5px
+    &__field
+      min-height: 59px
+      padding: 15px 30px
+    &__city
+      min-height: 62px
+    &__consent
+      min-height: 74px
+      margin-top: 0
+      align-items: center
+      gap: 20px
+    &__submit
+      min-height: 59px
+      margin-top: 0
+  body .discount__form > .ts-wrapper
+    min-height: 0
+    padding: 0
+  body .discount__form .ts-control
+    min-height: 62px
+
+@media ($tablet-only)
+  body .discount
+    &__title
+      font-size: 32px
+      line-height: 35px
+    &__lead
+      max-width: 399px
+      margin-top: 16px
+  body .departments__list
+    row-gap: 60px
+  body .department
+    &__text
+      margin-top: 12px
+    &__label
+      margin-top: 24px
+    &__phone
+      margin-top: 4px
+    &__email
+      margin-top: 8px
+
+@media ($mobile)
+  body .discount__city
+    min-height: 58px
+  body .discount__consent
+    min-height: 72px
+    margin-top: 0
+    align-items: center
+  body .discount__form .ts-control
+    min-height: 58px
+
+// Кнопки продукции находятся в showcase только в десктопных композициях.
+body .main--products .page-hero__actions
+  display: none
+@media ($tablet)
+  body .main--products .products-intro__actions
+    display: none
+  body .main--products .page-hero__lead
+    color: $green-muted
+
+@media ($tablet)
+  body .main--products .page-hero__container
+    display: flex
+    flex-direction: column
+  body .main--products .page-hero__content
+    order: 0
+  body .main--products .page-hero__lead
+    order: 1
+  body .products-intro__media
+    position: relative
+  body .products-intro__photo
+    border-radius: 10px
+
+@media ($tablet-only)
+  body .main--products .page-hero
+    padding-top: 155px
+  body .main--products .page-hero__background
+    height: 287px
+  body .main--products .page-hero__container
+    gap: 40px
+  body .main--products .page-hero__title
+    font-size: 48px
+    line-height: 48px
+  body .main--products .page-hero__accent
+    font-size: 56px
+    line-height: 56px
+    margin-top: -12px
+  body .main--products .page-hero__lead
+    max-width: 525px
+
+@media ($mobile)
+  body .main--products .page-hero__container
+    gap: 24px
+  body .main--products .page-hero__title
+    font-size: 32px
+    line-height: 32px
+  body .main--products .page-hero__accent
+    width: 273px
+    line-height: 24px
+    margin-top: -4px
+  body .main--products .page-hero__lead
+    font-size: 14px
+    line-height: 20px
+  body .products-intro__chip
+    &:nth-of-type(1)
+      left: 18.5% !important
+      top: 46% !important
+    &:nth-of-type(2)
+      left: 27% !important
+      top: 94% !important
+    &:nth-of-type(3)
+      left: 74% !important
+      top: 55% !important
+
+@media ($tablet-only)
+  body .benefits__list
+    gap: 0
+  body .benefit-card
+    padding: 40px
+    &--support
+      margin-top: 8px
+    &--tasting
+      margin-top: -13px
+    &--standards
+      margin-top: -67px
+  body .promo
+    &__title
+      font-size: 32px
+      line-height: 35.2px
+    &__lead
+      max-width: 450px
+      margin-top: 16px
+      line-height: 23.4px
+    &__button
+      margin-top: 60px
+      min-height: 57px
+      font-size: 16px
+      line-height: 19.2px
+  body .footer
+    &__card
+      padding: 40px 30px 26px
+    &__top
+      grid-template-columns: 1fr 1fr
+      gap: 40px 20px
+    &__logo
+      grid-column: auto
+    &__nav
+      margin-top: 10px
+    &__contacts
+      grid-column: 1 / -1
+      grid-template-columns: 1fr 1fr
+      gap: 20px
+    &__bottom
+      grid-template-columns: 1fr 1fr
+      gap: 4px 20px
+      margin-top: 80px
+    &__copy
+      grid-column: 1 / -1
+
+@media ($mobile)
+  body .products-intro__note
+    left: 20px
+
+@media ($tablet-only)
+  body .footer
+    &__label
+      font-size: 16px
+      line-height: 22px
+      margin-bottom: 12px
+    &__list
+      gap: 16px
+    &__nav .footer__link
+      font-size: 18px
+      line-height: 19px
+    &__socials img
+      width: 40px
+      height: 40px
+    &__bottom
+      grid-template-columns: 1.2fr 1fr
+
+@media ($tablet-only)
+  body .main--schedule .page-hero
+    padding-top: 155px
+  body .main--schedule .page-hero__background
+    height: 287px
+  body .main--schedule .page-hero__container
+    display: flex
+    flex-direction: column
+    gap: 40px
+  body .main--schedule .page-hero__content
+    order: 0
+  body .main--schedule .page-hero__lead
+    order: 1
+    max-width: 353px
+    color: $green-muted
+  body .main--schedule .page-hero__title
+    font-size: 48px
+    line-height: 48px
+  body .main--schedule .page-hero__accent
+    font-size: 56px
+    line-height: 56px
+    margin-top: -12px
+
+  body .main--notfound .page-hero
+    height: 504px
+    padding-top: 155px
+  body .main--notfound .page-hero__background
+    height: 407px
+  body .main--notfound .page-hero__container,
+  body .main--thanks .page-hero__container
+    display: block
+  body .main--notfound .page-hero__content,
+  body .main--thanks .page-hero__content
+    max-width: 540px
+  body .main--notfound .page-hero__title,
+  body .main--thanks .page-hero__title
+    font-size: 48px
+    line-height: 48px
+  body .main--notfound .page-hero__lead,
+  body .main--thanks .page-hero__lead
+    margin-top: 24px
+  body .main--notfound .page-hero__actions
+    position: absolute
+    top: 292px
+    left: 20px
+    right: 20px
+    margin: 0
+  body .main--notfound .page-hero__actions .button,
+  body .main--thanks .page-hero__outside .button
+    flex: 1
+    min-height: 57px
+  body .main--thanks .page-hero
+    height: 311px
+    padding-top: 155px
+  body .main--thanks .page-hero__outside
+    display: block
+    margin-top: 40px
+  body .main--thanks .page-hero__outside .page-hero__actions
+    margin-top: 0
+
+@media ($laptop-only)
+  body .page-hero
+    padding-top: 190px
+  body .page-hero__container
+    grid-template-columns: 380px minmax(0, 1fr)
+    gap: 40px
+  body .page-hero__title
+    font-size: 56px
+    line-height: 56px
+  body .page-hero__accent
+    font-size: 60px
+    line-height: 60px
+    margin-top: -8px
+  body .page-hero__lead
+    font-size: 18px
+    line-height: 25.2px
+  body .main--products .page-hero__background,
+  body .main--schedule .page-hero__background
+    height: 345px
+  body .main--notfound .page-hero
+    --hero-h: 578px
+  body .main--notfound .page-hero__background
+    height: 461px
+  body .main--notfound .page-hero__content
+    max-width: 740px
+  body .main--notfound .page-hero__lead
+    max-width: 522px
+    margin-top: 24px
+  body .main--notfound .page-hero__actions
+    margin-top: 120px
+  body .main--thanks .page-hero
+    --hero-h: 380px
+  body .main--thanks .page-hero__outside
+    grid-template-columns: 380px minmax(0, 1fr)
+    gap: 40px
+    margin-top: 60px
+  body .main--notfound .page-hero__actions .button,
+  body .main--thanks .page-hero__outside .button
+    min-height: 57px
+
+// Координаты меток сняты с мобильных и планшетных фреймов Figma.
+@media ($tablet)
+  body .platter__image
+    position: absolute
+    left: -10%
+    top: -6%
+    width: 117%
+    height: 114%
+    transform: none
+
+@media ($mobile)
+  body #meat .platter__pin[data-pin="0"]
+    left: 58% !important
+    top: 14% !important
+  body #meat .platter__pin[data-pin="1"]
+    left: 85% !important
+    top: 46% !important
+  body #meat .platter__pin[data-pin="2"]
+    left: 50% !important
+    top: 47% !important
+  body #meat .platter__pin[data-pin="3"]
+    left: 63% !important
+    top: 79% !important
+  body #meat .platter__pin[data-pin="4"]
+    left: 24% !important
+    top: 68% !important
+  body #meat .platter__pin[data-pin="5"]
+    left: 18% !important
+    top: 30% !important
+  body #fish .platter__pin[data-pin="0"]
+    left: 69% !important
+    top: 20% !important
+  body #fish .platter__pin[data-pin="1"]
+    left: 79% !important
+    top: 55% !important
+  body #fish .platter__pin[data-pin="2"]
+    left: 50% !important
+    top: 47% !important
+  body #fish .platter__pin[data-pin="3"]
+    left: 50% !important
+    top: 80% !important
+  body #fish .platter__pin[data-pin="4"]
+    left: 18% !important
+    top: 54% !important
+  body #fish .platter__pin[data-pin="5"]
+    left: 31% !important
+    top: 20% !important
+  body #cheese .platter__pin[data-pin="0"]
+    left: 69% !important
+    top: 20% !important
+  body #cheese .platter__pin[data-pin="1"]
+    left: 79% !important
+    top: 55% !important
+  body #cheese .platter__pin[data-pin="2"]
+    left: 50% !important
+    top: 47% !important
+  body #cheese .platter__pin[data-pin="3"]
+    left: 50% !important
+    top: 80% !important
+  body #cheese .platter__pin[data-pin="4"]
+    left: 18% !important
+    top: 54% !important
+  body #cheese .platter__pin[data-pin="5"]
+    left: 31% !important
+    top: 20% !important
+  body #sweets .platter__pin[data-pin="0"]
+    left: 79% !important
+    top: 33% !important
+  body #sweets .platter__pin[data-pin="1"]
+    left: 69% !important
+    top: 76% !important
+  body #sweets .platter__pin[data-pin="2"]
+    left: 50% !important
+    top: 47% !important
+  body #sweets .platter__pin[data-pin="3"]
+    left: 34% !important
+    top: 77% !important
+  body #sweets .platter__pin[data-pin="4"]
+    left: 16% !important
+    top: 44% !important
+  body #sweets .platter__pin[data-pin="5"]
+    left: 42% !important
+    top: 16% !important
+
+@media ($tablet-only)
+  body #meat .platter__pin[data-pin="0"]
+    left: 61% !important
+    top: 17% !important
+  body #meat .platter__pin[data-pin="1"]
+    left: 84% !important
+    top: 47% !important
+  body #meat .platter__pin[data-pin="2"]
+    left: 49% !important
+    top: 50% !important
+  body #meat .platter__pin[data-pin="3"]
+    left: 64% !important
+    top: 83% !important
+  body #meat .platter__pin[data-pin="4"]
+    left: 21% !important
+    top: 71% !important
+  body #meat .platter__pin[data-pin="5"]
+    left: 21% !important
+    top: 30% !important
+  body #fish .platter__pin[data-pin="0"]
+    left: 69% !important
+    top: 22% !important
+  body #fish .platter__pin[data-pin="1"]
+    left: 80% !important
+    top: 55% !important
+  body #fish .platter__pin[data-pin="2"]
+    left: 50% !important
+    top: 47% !important
+  body #fish .platter__pin[data-pin="3"]
+    left: 50% !important
+    top: 81% !important
+  body #fish .platter__pin[data-pin="4"]
+    left: 15% !important
+    top: 53% !important
+  body #fish .platter__pin[data-pin="5"]
+    left: 29% !important
+    top: 19% !important
+  body #cheese .platter__pin[data-pin="0"]
+    left: 69% !important
+    top: 22% !important
+  body #cheese .platter__pin[data-pin="1"]
+    left: 80% !important
+    top: 55% !important
+  body #cheese .platter__pin[data-pin="2"]
+    left: 50% !important
+    top: 47% !important
+  body #cheese .platter__pin[data-pin="3"]
+    left: 50% !important
+    top: 81% !important
+  body #cheese .platter__pin[data-pin="4"]
+    left: 15% !important
+    top: 53% !important
+  body #cheese .platter__pin[data-pin="5"]
+    left: 29% !important
+    top: 19% !important
+  body #sweets .platter__pin[data-pin="0"]
+    left: 75% !important
+    top: 35% !important
+  body #sweets .platter__pin[data-pin="1"]
+    left: 72% !important
+    top: 70% !important
+  body #sweets .platter__pin[data-pin="2"]
+    left: 50% !important
+    top: 47% !important
+  body #sweets .platter__pin[data-pin="3"]
+    left: 31% !important
+    top: 74% !important
+  body #sweets .platter__pin[data-pin="4"]
+    left: 12% !important
+    top: 40% !important
+  body #sweets .platter__pin[data-pin="5"]
+    left: 42% !important
+    top: 14% !important

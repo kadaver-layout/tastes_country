@@ -3,23 +3,22 @@
 // Слайдер продуктов: геометрия карточки из макета (карточка 1840x910).
 .featured
   &__card
+    position: relative
     border-radius: 20px
     background: $cream
-    overflow: hidden
+    overflow: clip
+    touch-action: pan-y pinch-zoom
     @media ($mobile)
       border-radius: 10px
+  // Track без нативного scroll-container: позиция задаётся transform-ом (JS),
+  // вертикальное колесо всегда прокручивает страницу, горизонтальных жестов нет.
   &__list
     display: flex
-    overflow-x: auto
-    scroll-snap-type: x mandatory
-    scrollbar-width: none
-    &::-webkit-scrollbar
-      display: none
+    will-change: transform
   &__slide
     position: relative
     flex: 0 0 100%
     height: 910px
-    scroll-snap-align: start
     @media ($tablet)
       height: auto
       min-height: 600px
@@ -45,6 +44,7 @@
     height: 100%
     object-fit: cover
     border-radius: 20px 0 0 20px
+    background: $green-nav
     @media ($tablet)
       border-radius: 20px
     @media ($mobile)
@@ -97,6 +97,9 @@
       top: 0
       left: 0
       max-width: 475px
+    @media ($mobile)
+      width: auto
+      max-width: 100%
   &__description
     margin-top: 16px
     font-size: 24px
@@ -132,21 +135,22 @@
       @media ($mobile)
         font-size: 18px
         line-height: 19.8px
+  // Постоянный слой управления поверх viewport (вне клонируемых слайдов).
   &__nav
     position: absolute
-    top: 673px
-    left: 225px
+    top: 778px
+    left: 1024px
     gap: 120px
     @media ($tablet)
-      position: relative
-      top: 0
-      left: 0
-      justify-content: space-between
-      width: 244px
-      margin-top: 48px
+      top: 510px
+      left: 368px
+      width: 220px
     @media ($mobile)
+      top: 450px
+      left: 40px
       width: 200px
-      margin-top: 24px
+  // Крокаут = экспорт самого фото-узла Figma (альфа вокруг продукта),
+  // боксы — прямоугольники фото из дерева макета.
   &__cutout
     position: absolute
     top: -181px
@@ -157,29 +161,48 @@
       top: 40px
       right: 20px
       width: 280px
-      height: 310px
+      height: 316px
     @media ($mobile)
       position: relative
       top: 0
       right: 0
       order: 3
       width: 220px
-      height: 240px
+      height: 248px
       margin: 0 auto 24px
-  &__slide:nth-child(2) &__cutout
+  // Номера слайдов — классами: клоны для бесшовного цикла сдвигают nth-child.
+  &__slide--2 &__cutout
     top: 292px
     right: -355px
     width: 947px
     height: 773px
-  &__slide:nth-child(3) &__cutout
+    @media ($tablet)
+      top: 40px
+      right: 20px
+      width: 280px
+      height: 229px
+    @media ($mobile)
+      width: 240px
+      height: 196px
+  &__slide--3 &__cutout
     top: 207px
     right: 0
     width: 448px
     height: 506px
+    @media ($tablet)
+      top: 40px
+      right: 20px
+      width: 240px
+      height: 271px
+    @media ($mobile)
+      width: 200px
+      height: 226px
+  // Подложка-силуэт (кремовая кромка) — отдельным слоем позади фото,
+  // геометрия своя у каждого слайда (из дерева макета).
   &__outline
     position: absolute
     top: 18px
-    right: -17px
+    right: -18px
     bottom: -17px
     left: -17px
     width: auto
@@ -187,11 +210,29 @@
     max-width: none
     @media ($tablet)
       display: none
-  &__slide:nth-child(2) &__outline,
-  &__slide:nth-child(3) &__outline
-    display: none
+  &__slide--2 &__outline
+    top: 129px
+    right: 148px
+    bottom: 20px
+    left: 149px
+  &__slide--3 &__outline
+    top: -8px
+    right: -14px
+    bottom: 11px
+    left: 1px
   &__cutout-photo
     position: relative
     width: 100%
     height: 100%
     object-fit: contain
+  // Анимация входа активного слайда (ставится JS при переключении).
+  &__slide.is-enter
+    .featured__content
+      animation: rise-in 0.45s ease backwards
+    .featured__cutout
+      animation: cutout-in 0.55s ease backwards
+
+@keyframes cutout-in
+  from
+    opacity: 0
+    transform: translateX(48px)

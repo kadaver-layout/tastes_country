@@ -1,6 +1,15 @@
 <dialog class="modal" id="mobile-menu" aria-label="Меню сайта">
   <div class="modal__card modal__card--menu">
-    <button class="modal__close" type="button" data-close-dialog aria-label="Закрыть меню"></button>
+    <div class="modal__menu-top">
+      <a class="modal__menu-logo" href="index.html" aria-label="Вкусы страны — на главную">
+        <img src="assets/img/logo-header.svg" alt="" width="152" height="70">
+      </a>
+      <button class="header__city modal__menu-city" type="button" data-open-dialog="city-dialog" aria-haspopup="dialog">
+        <span data-current-city>{{ site.city }}</span>
+        <img src="assets/img/chevron-down.svg" alt="" width="24" height="24">
+      </button>
+      <button class="modal__close" type="button" data-close-dialog aria-label="Закрыть меню"></button>
+    </div>
     <nav class="modal__menu" aria-label="Мобильная навигация">
       <ul class="modal__menu-list">
         {% for item in nav %}
@@ -8,16 +17,20 @@
         {% endfor %}
       </ul>
     </nav>
-    <a class="button button--lime modal__menu-phone" href="{{ site.phoneHref }}">{{ site.phone }}</a>
-    <ul class="modal__socials">
+    <p class="modal__menu-label">Мы на связи</p>
+    <ul class="modal__socials modal__socials--plain">
       {% for social in socials %}
       <li>
         <a class="modal__social" href="{{ social.url }}" aria-label="{{ social.name }}">
-          <img src="assets/img/{{ social.icon }}.svg" alt="" width="48" height="48">
+          <img src="assets/img/{{ social.icon }}.svg" alt="" width="24" height="24">
         </a>
       </li>
       {% endfor %}
     </ul>
+    <div class="modal__menu-actions">
+      <button class="button button--lime" type="button" data-open-dialog="discount-dialog">Получить скидку 10%</button>
+      <a class="button button--cream" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+    </div>
   </div>
 </dialog>
 
@@ -27,7 +40,7 @@
     <div class="modal__copy">
       <h2 class="modal__title" id="city-dialog-title">Выбор города</h2>
       <label class="visually-hidden" for="city-select">Ваш город</label>
-      <select class="modal__select js-select" id="city-select" data-city-select>
+      <select class="modal__select js-select select--light" id="city-select" data-city-select>
         <option value="" disabled selected>Ваш город</option>
         {% for city in cities %}
         <option value="{{ city }}">{{ city }}</option>

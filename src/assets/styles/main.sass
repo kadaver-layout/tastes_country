@@ -68,6 +68,9 @@
     margin-top: 210px
 
 .main--index
+  // Категории выше промо: волна промо-блока уходит под секцию, как в макете.
+  > .categories
+    z-index: 2
   > .coverage
     margin-top: 170px
   > .discount
@@ -96,3 +99,92 @@
   @media ($mobile)
     right: 20px
     bottom: 20px
+
+// Межсекционные интервалы заданы отдельно для адаптивных макетов.
+@media ($tablet)
+  .main > * + *
+    margin-top: 120px
+  .main > .main__pattern + *
+    margin-top: 0
+  .main--products
+    > .products-intro
+      margin-top: 60px
+    > .categories, > .platter, > .collage, > .promo
+      margin-top: 160px
+    > .nearby-fairs
+      margin-top: 160px
+  .main--index > .coverage, .main--index > .discount
+    margin-top: 120px
+  .main--index + .footer
+    margin-top: 120px
+  .main--about > .values
+    margin-top: 120px
+  .main--thanks > .nearby-fairs
+    margin-top: 120px
+  .main--schedule > .featured-fairs
+    margin-top: 80px
+  .footer
+    margin-top: 120px
+
+@media ($laptop-only)
+  .main > * + *
+    margin-top: 120px
+  .main > .main__pattern + *
+    margin-top: 0
+  .main--products
+    > .products-intro
+      margin-top: 60px
+    > .categories, > .platter, > .collage, > .promo
+      margin-top: 200px
+    > .nearby-fairs
+      margin-top: 200px
+  .main--index > .coverage, .main--index > .discount
+    margin-top: 120px
+  .main--index > .nearby-fairs
+    margin-top: 80px
+  .main--index + .footer
+    margin-top: 50px
+  .main--about > .values
+    margin-top: 120px
+  .main--thanks > .nearby-fairs
+    margin-top: 120px
+  .main--schedule > .featured-fairs
+    margin-top: 80px
+  .footer
+    margin-top: 120px
+
+@media ($mobile)
+  .main > * + *
+    margin-top: 100px
+  .main > .main__pattern + *
+    margin-top: 0
+  .main--products
+    > .products-intro
+      margin-top: 50px
+    > .categories, > .platter, > .collage, > .promo, > .nearby-fairs
+      margin-top: 100px
+  .main--index
+    > .nearby-fairs
+      margin-top: 63px
+    > .featured
+      margin-top: 100px
+    > .categories
+      margin-top: 80px
+    > .promo
+      margin-top: 23px
+    > .coverage, > .discount
+      margin-top: 100px
+    + .footer
+      margin-top: 20px
+  .main--about > .values
+    margin-top: 100px
+  .main--contacts > .care
+    margin-top: 80px
+  .main--contacts > .departments, .main--contacts > .nearby-fairs
+    margin-top: 80px
+  .main--thanks > .nearby-fairs
+    margin-top: 100px
+  .main--schedule > .featured-fairs
+    margin-top: 50px
+  .footer
+    margin-top: 100px

@@ -1,5 +1,5 @@
 {# Общая форма скидки: используется в секции discount и в поп-апе. Префикс id задаётся вызывающим шаблоном. #}
-<form class="discount__form" data-discount-form action="#" method="post" novalidate>
+<form class="discount__form" data-discount-form method="post" novalidate>
   <label class="visually-hidden" for="{{ prefix }}-name">{{ discount.namePlaceholder }}</label>
   <input class="discount__field" id="{{ prefix }}-name" name="name" type="text" placeholder="{{ discount.namePlaceholder }}" autocomplete="name" required>
   <label class="visually-hidden" for="{{ prefix }}-phone">{{ discount.phonePlaceholder }}</label>

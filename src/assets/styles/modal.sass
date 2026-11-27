@@ -12,7 +12,7 @@
     position: relative
     padding: 60px 80px
     border-radius: 24px
-    background: $cream
+    background: $cream-page
     box-shadow: $shadow-card
     @media ($mobile)
       padding: 32px 20px
@@ -28,6 +28,12 @@
       flex-direction: column
       gap: 32px
       padding: 40px 24px
+      background: $green
+      .modal__close
+        position: static
+        margin-left: auto
+        background: $cream
+        color: $green
   &__close
     position: absolute
     top: 20px
@@ -56,12 +62,12 @@
         height: 16px
   &__copy
     display: grid
-    gap: 24px
+    gap: 32px
     max-width: 480px
   &__title
     font-weight: 500
-    font-size: 28px
-    line-height: 38px
+    font-size: 32px
+    line-height: 35.2px
     letter-spacing: -0.04em
     color: $green
     @media ($mobile)
@@ -85,7 +91,7 @@
     border: 0
     border-radius: 10px
     appearance: none
-    background: $cream-page url("../img/chevron-down.svg") right 24px center / 24px no-repeat
+    background: $cream-deep url("../img/chevron-down.svg") right 24px center / 24px no-repeat
     font-size: 18px
     line-height: 23.4px
     letter-spacing: -0.02em
@@ -97,28 +103,58 @@
   &__actions
     display: flex
     gap: 10px
-    margin-top: 16px
+    margin-top: 48px
     @media ($mobile)
       flex-direction: column
   &__action
-    min-height: 60px
-    flex: 1
+    min-height: 62px
+    flex: 0 0 auto
+    @media ($mobile)
+      flex: 1 1 auto
     &--secondary
-      background: $cream-page
+      background: $cream-deep
       color: $green
       &:hover
-        background: $cream-deep
+        background: $cream-page
+  &__menu-top
+    display: flex
+    align-items: center
+    gap: 16px
+  &__menu-logo
+    img
+      width: 120px
+      height: auto
+  &__menu-city
+    margin-left: 8px
   &__menu-list
     display: grid
-    gap: 16px
+    li + li
+      border-top: 1px solid rgba($cream, 0.16)
   &__menu-link
+    display: block
+    padding: 16px 0
     font-weight: 500
-    font-size: 24px
-    line-height: 26.4px
+    font-size: 20px
+    line-height: 24px
     letter-spacing: -0.02em
-    color: $green-nav
-  &__menu-phone
-    width: 100%
+    color: $cream
+  &__menu-label
+    font-size: 14px
+    line-height: 16.8px
+    letter-spacing: -0.02em
+    color: rgba($cream, 0.6)
+  &__menu-actions
+    display: grid
+    gap: 12px
+    margin-top: auto
   &__socials
     display: flex
     gap: 10px
+    // Иконки соцсетей — зелёный квадрат с кремовым глифом: на зелёной
+    // карточке меню квадрат сливается с фоном, остаётся чистый глиф.
+    &--plain
+      gap: 24px
+      .modal__social
+        display: inline-flex
+        padding: 0
+        background: none

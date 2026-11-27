@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "gulp",
-    "prod": "gulp --prod"
+    "prod": "gulp --prod",
+    "qa:v2": "node scripts/qa-v2.mjs"
   },
   "author": "Kadaver",
   "license": "ISC",
@@ -27,6 +28,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "merge-stream": "^2.0.0",
     "micromodal": "^0.6.1",
+    "puppeteer-core": "^25.19.0",
     "sass": "^1.89.2",
     "sharp": "^0.33.5",
     "svgo": "^4.0.0",

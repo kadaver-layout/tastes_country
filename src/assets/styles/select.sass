@@ -13,6 +13,30 @@ select.ts-hidden-accessible
   clip-path: inset(50%)
   white-space: nowrap
 
+// Светлая вариация селекта (модалка выбора города на кремовой карточке).
+.ts-wrapper.select--light
+  &.single .ts-control
+    background: $cream-deep
+    color: $green-muted
+    input::placeholder
+      color: $green-muted
+    &::after
+      background: $green
+  &:focus-within .ts-control
+    outline-color: $green
+  .ts-dropdown
+    background: $cream
+    scrollbar-color: $green-muted transparent
+    &::-webkit-scrollbar-thumb
+      background: $green-muted
+    .option
+      color: $green
+      &.active,
+      &:hover
+        background: $cream-deep
+      &.selected
+        background: rgba($green, 0.12)
+
 // Тема tom-select по макету «Выпадающие списки»: зелёный контрол и дропдаун.
 .ts-wrapper
   position: relative

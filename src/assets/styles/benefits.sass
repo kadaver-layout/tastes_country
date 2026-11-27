@@ -51,6 +51,7 @@
   position: absolute
   padding: 52px 55px
   border-radius: 30px
+  transition: transform $anim
   @media ($tablet)
     position: relative
     top: auto !important
@@ -58,6 +59,7 @@
     width: auto !important
     height: auto !important
     padding: 32px
+    transform: none !important
   @media ($mobile)
     padding: 24px
   &__title
@@ -82,6 +84,7 @@
     @media ($mobile)
       font-size: 16px
       line-height: 22.4px
+  // Наклоны карточек — из трансформаций компонентов макета.
   &--assortment
     top: 8px
     left: 0
@@ -89,6 +92,7 @@
     height: 416px
     background: $orange
     color: $cream
+    transform: rotate(-3deg)
     .benefit-card__text
       color: $cream
   &--support
@@ -97,6 +101,7 @@
     width: 468px
     height: 264px
     background: $cream
+    transform: rotate(2deg)
     .benefit-card__text
       color: $green-mid
   &--tasting
@@ -106,6 +111,7 @@
     height: 325px
     background: $green
     color: $green-pale
+    transform: rotate(-5deg)
     .benefit-card__text
       color: $green-light
   &--standards
@@ -114,5 +120,6 @@
     width: 479px
     height: 400px
     background: $lime
+    transform: rotate(3deg)
     .benefit-card__text
       color: $green-nav

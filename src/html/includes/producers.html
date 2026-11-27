@@ -1,15 +1,16 @@
 <section class="producers">
   <div class="container">
     <h2 class="visually-hidden">Производители ярмарки</h2>
-    <div class="producers__card" data-rail>
+    <div class="producers__card" data-rail data-rail-mode="slide">
       <div class="producers__info">
         <img class="producers__blob" src="assets/img/blob.svg" alt="" aria-hidden="true">
         <div class="producers__content">
-          <h3 class="card-title producers__title">{{ producers.title }}</h3>
+          <h3 class="card-title producers__title">{{ producers.title | safe }}</h3>
           <p class="producers__text">{{ producers.text }}</p>
         </div>
-        <img class="producers__sticker producers__sticker--lime" src="assets/img/sticker-producers-red.svg" alt="" width="160" height="125">
-        <img class="producers__sticker producers__sticker--red" src="assets/img/sticker-producers-lime.svg" alt="" width="170" height="135">
+        <!-- Имена файлов на диске перепутаны: red.svg содержит лаймовую плашку и наоборот. -->
+        <img class="producers__sticker producers__sticker--lime" src="assets/img/sticker-producers-red.svg" alt="" width="170" height="135">
+        <img class="producers__sticker producers__sticker--red" src="assets/img/sticker-producers-lime.svg" alt="" width="160" height="125">
         <div class="rail-nav producers__nav">
           <button class="rail-button" type="button" data-rail-prev aria-label="Предыдущий производитель">
             <img src="assets/img/arrow-left.svg" alt="">
@@ -19,7 +20,7 @@
           </button>
         </div>
       </div>
-      <div class="producers__gallery" data-rail>
+      <div class="producers__gallery">
         <ul class="producers__photos" data-rail-track>
           {% for photo in producers.photos %}
           <li class="producers__photo">

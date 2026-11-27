@@ -2,7 +2,7 @@
 
 .gallery
   @media ($mobile)
-    padding-block: 48px
+    padding-block: 0
   &__container
     position: relative
   &__intro
@@ -12,6 +12,20 @@
     max-width: 820px
     margin: 0 auto 60px
     text-align: center
+    @media ($mobile)
+      gap: 12px
+      margin-bottom: 40px
+  &__title
+    @media ($mobile)
+      font-size: 26px
+      line-height: 26px
+  &__title-laptop
+    display: none
+  @media ($laptop-only)
+    &__title-default
+      display: none
+    &__title-laptop
+      display: inline
   &__rail
     position: relative
   &__list
@@ -30,9 +44,9 @@
       object-fit: cover
       border-radius: 20px
       @media ($tablet)
-        height: 520px
+        height: 400px
       @media ($mobile)
-        height: 320px
+        height: 300px
         border-radius: 10px
   &__nav
     justify-content: center
@@ -41,6 +55,9 @@
     @media ($mobile)
       gap: 60px
       width: 200px
+      margin-top: 24px
+    @media ($tablet-only)
+      margin-top: 40px
   &__sticker
     position: absolute
     pointer-events: none

@@ -89,49 +89,185 @@ function initDialogs() {
 }
 
 // Карусели: ленты карточек и послайдовые блоки (data-rail-mode="slide").
-// У каждой ленты собственные кнопки и положение.
-function initRails() {
-  document.querySelectorAll("[data-rail]").forEach((rail) => {
-    const track = rail.querySelector("[data-rail-track]");
-    const previous = rail.querySelector("[data-rail-prev]");
-    const next = rail.querySelector("[data-rail-next]");
-    if (!track || !previous || !next) return;
-    const slideMode = rail.dataset.railMode === "slide";
+// Slide-режим не использует нативный scroll API: track ездит transform-ом,
+// вертикальное колесо всегда уходит странице, горизонтальных жестов нет.
+// Контроллер каждого rail живёт в WeakMap; refresh = destroy + init.
+const railControllers = new WeakMap();
+const railsIn = (root) => [
+  ...(root.matches?.("[data-rail]") ? [root] : []),
+  ...root.querySelectorAll("[data-rail]"),
+];
 
-    function step() {
-      if (slideMode) return track.clientWidth;
+function destroyRail(rail) {
+  const ctrl = railControllers.get(rail);
+  if (!ctrl) return;
+  ctrl.abort.abort();
+  rail.querySelectorAll("[data-rail-clone]").forEach((clone) => clone.remove());
+  const track = rail.querySelector("[data-rail-track]");
+  if (track) {
+    track.style.transform = "";
+    track.style.transition = "";
+  }
+  railControllers.delete(rail);
+}
+
+function initRails(root = document) {
+  const scope = root.querySelectorAll ? root : document;
+  railsIn(scope).forEach((rail) => {
+    if (railControllers.has(rail)) return;
+    const track = rail.querySelector("[data-rail-track]");
+    if (!track) return;
+    const slideMode = rail.dataset.railMode === "slide";
+    const abort = new AbortController();
+    const { signal } = abort;
+    const ctrl = { abort, index: 0, count: 0, width: 0, setSlide: null, moving: false };
+    railControllers.set(rail, ctrl);
+
+    const slides = [...track.children].filter((li) => !li.hasAttribute("data-rail-clone"));
+    ctrl.count = slides.length;
+
+    const controls = [...rail.querySelectorAll("[data-rail-prev], [data-rail-next]")];
+    const setControlsDisabled = (disabled) => {
+      controls.forEach((button) => {
+        button.disabled = disabled;
+        button.setAttribute("aria-disabled", String(disabled));
+      });
+    };
+
+    if (slideMode) {
+      // Бесшовный цикл как в прототипе: клоны первого/последнего слайдов.
+      if (ctrl.count >= 2) {
+        const head = slides[0].cloneNode(true);
+        const tail = slides[ctrl.count - 1].cloneNode(true);
+        [head, tail].forEach((clone) => {
+          clone.setAttribute("aria-hidden", "true");
+          clone.setAttribute("data-rail-clone", "");
+          clone.inert = true;
+          clone.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+          clone.querySelectorAll("[data-reel-toggle]").forEach((el) => el.removeAttribute("data-reel-toggle"));
+        });
+        track.prepend(tail);
+        track.append(head);
+        ctrl.index = 1;
+      }
+      setControlsDisabled(ctrl.count < 2);
+
+      const measure = () => {
+        ctrl.width = track.parentElement.clientWidth;
+      };
+      const apply = (instant) => {
+        track.style.transition = instant || reducedMotion.matches ? "none" : "transform 320ms ease";
+        track.style.transform = `translate3d(${-ctrl.index * ctrl.width}px, 0, 0)`;
+      };
+      const playEnter = () => {
+        const slide = track.children[ctrl.index];
+        if (!slide || slide.hasAttribute("data-rail-clone")) return;
+        slide.classList.remove("is-enter");
+        void slide.offsetWidth;
+        slide.classList.add("is-enter");
+      };
+      ctrl.setSlide = (index, instant) => {
+        ctrl.index = index;
+        apply(instant);
+        if (instant) playEnter();
+      };
+      const finishSlide = () => {
+        if (ctrl.index === ctrl.count + 1) ctrl.setSlide(1, true);
+        else if (ctrl.index === 0) ctrl.setSlide(ctrl.count, true);
+        else playEnter();
+        ctrl.moving = false;
+      };
+      measure();
+      apply(true);
+      playEnter();
+
+      track.addEventListener(
+        "transitionend",
+        (event) => {
+          if (event.propertyName !== "transform" || event.target !== track) return;
+          finishSlide();
+        },
+        { signal }
+      );
+      window.addEventListener(
+        "resize",
+        () => {
+          measure();
+          if (ctrl.index === ctrl.count + 1) ctrl.index = 1;
+          else if (ctrl.count > 1 && ctrl.index === 0) ctrl.index = ctrl.count;
+          ctrl.moving = false;
+          apply(true);
+        },
+        { signal }
+      );
+      rail.addEventListener(
+        "click",
+        (event) => {
+          if (ctrl.count < 2 || ctrl.moving) return;
+          const direction = event.target.closest("[data-rail-prev]") ? -1 : event.target.closest("[data-rail-next]") ? 1 : 0;
+          if (!direction) return;
+          ctrl.moving = true;
+          ctrl.setSlide(ctrl.index + direction, reducedMotion.matches);
+          if (reducedMotion.matches) finishSlide();
+        },
+        { signal }
+      );
+      return;
+    }
+
+    // Ленты карточек: нативный скролл допустим, стрелки листают по кругу.
+    const step = () => {
       const item = track.firstElementChild;
       if (!item) return track.clientWidth;
       const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
       return item.getBoundingClientRect().width + gap;
-    }
-    // В макете стрелки всегда активны: лента ходит по кругу.
-    function atEdge(direction) {
+    };
+    const atEdge = (direction) => {
       if (direction > 0) return track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
       return track.scrollLeft <= 1;
-    }
-    function move(direction) {
+    };
+    const move = (direction) => {
       if (atEdge(direction)) {
         track.scrollTo({ left: direction > 0 ? 0 : track.scrollWidth, behavior: scrollBehavior() });
         return;
       }
       track.scrollBy({ left: direction * step(), behavior: scrollBehavior() });
-    }
-
-    previous.addEventListener("click", () => move(-1));
-    next.addEventListener("click", () => move(1));
-    // Доступ к карточкам за границей ленты через Tab не требует нажатия стрелок.
-    track.addEventListener("focusin", (event) => {
-      const card = event.target.closest("li");
-      if (!card) return;
-      const box = card.getBoundingClientRect();
-      const viewport = track.getBoundingClientRect();
-      if (box.left < viewport.left || box.right > viewport.right) {
-        card.scrollIntoView({ block: "nearest", inline: "nearest" });
-      }
-    });
+    };
+    rail.addEventListener(
+      "click",
+      (event) => {
+        if (event.target.closest("[data-rail-prev]")) move(-1);
+        else if (event.target.closest("[data-rail-next]")) move(1);
+      },
+      { signal }
+    );
+    track.addEventListener(
+      "focusin",
+      (event) => {
+        const card = event.target.closest("li");
+        if (!card) return;
+        const box = card.getBoundingClientRect();
+        const viewport = track.getBoundingClientRect();
+        if (box.left < viewport.left || box.right > viewport.right) {
+          card.scrollIntoView({ block: "nearest", inline: "nearest" });
+        }
+      },
+      { signal }
+    );
   });
 }
+
+// Публичный идемпотентный API для AJAX-вставок: destroy снимает слушатели
+// и клоны, init читает новый набор слайдов и создаёт свежий контроллер.
+window.TastesRails = {
+  init: initRails,
+  destroy: destroyRail,
+  refresh(root = document) {
+    const scope = root.querySelectorAll ? root : document;
+    railsIn(scope).forEach(destroyRail);
+    initRails(root);
+  },
+};
 
 function readCookie(name) {
   const row = document.cookie.split("; ").find((value) => value.startsWith(name + "="));
@@ -247,12 +383,19 @@ function initDiscountForms() {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       error.hidden = true;
+      error.classList.remove("is-success");
       markFieldErrors(form);
-      if (form.querySelector(".is-error")) return;
+      if (form.querySelector(".is-error")) {
+        error.tabIndex = -1;
+        error.focus();
+        return;
+      }
       if (typeof window.TastesIntegrations?.submitDiscount !== "function") {
         // Без Битрикс не показываем фиктивное подтверждение заявки.
         error.textContent = "Не удалось отправить заявку. Попробуйте позже.";
         error.hidden = false;
+        error.tabIndex = -1;
+        error.focus();
         return;
       }
       submit.disabled = true;
@@ -260,12 +403,25 @@ function initDiscountForms() {
       try {
         const data = Object.fromEntries(new FormData(form).entries());
         const response = await window.TastesIntegrations.submitDiscount(data);
-        form.reset();
-        // Сервер может вернуть адрес страницы благодарности.
-        if (response?.url) location.href = response.url;
+        // Форму очищаем только после подтверждённого успеха.
+        if (response?.url) {
+          location.href = response.url;
+          return;
+        }
+        if (response?.successMessage) {
+          error.textContent = response.successMessage;
+          error.classList.add("is-success");
+          error.hidden = false;
+          form.reset();
+          return;
+        }
+        throw new Error("empty response");
       } catch {
+        // Valores сохраняем: пользователь видит свои данные и сводку ошибки.
         error.textContent = "Не удалось отправить заявку. Попробуйте позже.";
         error.hidden = false;
+        error.tabIndex = -1;
+        error.focus();
       } finally {
         submit.disabled = false;
         submit.removeAttribute("aria-busy");
@@ -313,40 +469,143 @@ function initPlatters() {
   });
 }
 
-// Переключение недель расписания: данные недели отдаёт сервер.
-// Без адаптера кнопки остаются точкой интеграции, demo-неделя не меняется.
+// Переключение недель расписания: единственный renderer и для первой недели,
+// и для переходов (DOM API + textContent, без innerHTML-конкатенации).
+// Даты — ISO; колонка бара = пересечение интервала ярмарки с неделей.
+// Серверный TastesIntegrations.loadWeek имеет приоритет, локальные недели — fallback.
 function initWeekNavigation() {
   const prev = document.querySelector("[data-week-prev]");
   const next = document.querySelector("[data-week-next]");
-  if (!prev || !next) return;
-  async function shift(direction) {
-    if (typeof window.TastesIntegrations?.loadWeek !== "function") return;
-    const week = await window.TastesIntegrations.loadWeek(direction);
-    if (week) document.dispatchEvent(new CustomEvent("tastes:week-changed", { detail: week }));
+  const source = document.getElementById("schedule-weeks");
+  const card = document.getElementById("schedule-overview");
+  if (!prev || !next || !source || !card) return;
+  let weeks = [];
+  try {
+    weeks = JSON.parse(source.textContent);
+  } catch {
+    weeks = [];
   }
-  prev.addEventListener("click", () => shift(-1));
-  next.addEventListener("click", () => shift(1));
+  if (!weeks.length) return;
+  const label = card.querySelector("[data-week-label]");
+  const daysEl = card.querySelector("[data-week-days]");
+  const rowsEl = card.querySelector("[data-week-rows]");
+  const status = card.querySelector("[data-week-status]");
+  const MONTHS_GEN = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  const MONTHS_NOM = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+  const parse = (iso) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d));
+  };
+  const addDays = (date, n) => new Date(date.getTime() + n * 86400000);
+  const isoOf = (d) => d.toISOString().slice(0, 10);
+  const full = (d) => `${d.getUTCDate()} ${MONTHS_GEN[d.getUTCMonth()]}`;
+  const validDate = (value) => {
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const date = parse(value);
+    return !Number.isNaN(date.getTime()) && isoOf(date) === value;
+  };
+  const validWeek = (week) => week && validDate(week.start) && (!week.today || validDate(week.today)) &&
+    Array.isArray(week.rows) && week.rows.every((row) => row && validDate(row.start) && validDate(row.end) &&
+      row.start <= row.end && typeof row.city === "string" && typeof row.address === "string");
+  if (!weeks.every(validWeek)) {
+    if (status) status.textContent = "Не удалось загрузить расписание.";
+    prev.disabled = true;
+    next.disabled = true;
+    return;
+  }
+  let index = 0;
+
+  function render(week) {
+    const start = parse(week.start);
+    const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
+    const end = days[6];
+    label.textContent =
+      start.getUTCMonth() === end.getUTCMonth() && start.getUTCFullYear() === end.getUTCFullYear()
+        ? `${MONTHS_NOM[start.getUTCMonth()]} | ${start.getUTCDate()}–${end.getUTCDate()}`
+        : `${full(start)} — ${full(end)}`;
+    daysEl.replaceChildren(
+      ...days.map((d) => {
+        const li = document.createElement("li");
+        li.className = "schedule__day" + (week.today && isoOf(d) === week.today ? " schedule__day--today" : "");
+        li.textContent = d.getUTCDate();
+        return li;
+      })
+    );
+    const todayIndex = week.today ? days.findIndex((d) => isoOf(d) === week.today) : -1;
+    rowsEl.style.setProperty("--today", todayIndex);
+    rowsEl.classList.toggle("schedule__rows--has-today", todayIndex >= 0);
+    rowsEl.replaceChildren(
+      ...week.rows
+        .map((row) => {
+          const from = Math.max(parse(row.start).getTime(), start.getTime());
+          const to = Math.min(parse(row.end).getTime(), end.getTime());
+          if (from > to) return null;
+          const fromIdx = Math.round((from - start.getTime()) / 86400000);
+          const toIdx = Math.round((to - start.getTime()) / 86400000);
+          const li = document.createElement("li");
+          li.className = "schedule__row";
+          const fair = document.createElement("div");
+          fair.className = "schedule__fair";
+          const city = document.createElement("h3");
+          city.className = "schedule__city";
+          city.textContent = row.city;
+          const address = document.createElement("p");
+          address.className = "schedule__address";
+          address.textContent = row.address;
+          fair.append(city, address);
+          const bar = document.createElement("p");
+          bar.className = "schedule__bar";
+          bar.style.gridColumn = `${fromIdx + 2} / ${toIdx > 6 ? -1 : toIdx + 3}`;
+          bar.textContent = `${full(parse(row.start))} — ${full(parse(row.end))}`;
+          li.append(fair, bar);
+          return li;
+        })
+        .filter(Boolean)
+    );
+    prev.disabled = index === 0;
+    next.disabled = index === weeks.length - 1;
+    if (status) status.textContent = `Неделя ${full(start)} — ${full(end)}`;
+  }
+
+  async function shift(direction, button) {
+    const target = index + direction;
+    if (target < 0 || target >= weeks.length) return;
+    const hadFocus = document.activeElement === button;
+    prev.disabled = true;
+    next.disabled = true;
+    prev.setAttribute("aria-busy", "true");
+    next.setAttribute("aria-busy", "true");
+    try {
+      if (typeof window.TastesIntegrations?.loadWeek === "function") {
+        const week = await window.TastesIntegrations.loadWeek(direction);
+        if (week != null) {
+          if (!validWeek(week)) throw new Error("Invalid week data");
+          index = target;
+          render(week);
+          return;
+        }
+      }
+      index = target;
+      render(weeks[index]);
+    } catch {
+      if (status) status.textContent = "Не удалось загрузить неделю. Попробуйте позже.";
+    } finally {
+      prev.removeAttribute("aria-busy");
+      next.removeAttribute("aria-busy");
+      prev.disabled = index === 0;
+      next.disabled = index === weeks.length - 1;
+      if (hadFocus) (button.disabled ? (direction > 0 ? prev : next) : button).focus();
+    }
+  }
+  render(weeks[0]);
+  prev.addEventListener("click", () => shift(-1, prev));
+  next.addEventListener("click", () => shift(1, next));
 }
 
-// Вертикальные reels: ролик играет, пока карточка в зоне видимости,
-// клик по карточке ставит паузу или возобновляет показ.
+// Вертикальные reels и видео продукта: автозапуска нет,
+// ролик играет только после нажатия на карточку (пауза — повторным).
 function initReels() {
-  const reels = [...document.querySelectorAll("[data-reel-toggle] video")];
-  if (!reels.length) return;
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.intersectionRatio >= 0.6) video.play().catch(() => {});
-          else video.pause();
-        });
-      },
-      { threshold: [0, 0.6] }
-    );
-    reels.forEach((video) => observer.observe(video));
-  }
-  reels.forEach((video) => {
+  document.querySelectorAll("[data-reel-toggle] video").forEach((video) => {
     const card = video.closest("[data-reel-toggle]");
     card?.addEventListener("click", () => {
       if (video.paused) video.play().catch(() => {});

@@ -4,7 +4,7 @@
     <ul class="faq__list">
       {% for item in faq %}
       <li class="faq__item">
-        <details class="faq__details" {% if loop.first %}open{% endif %}>
+        <details class="faq__details" open>
           <summary class="faq__question">{{ item.q }}</summary>
           <p class="faq__answer">{{ item.a }}</p>
         </details>

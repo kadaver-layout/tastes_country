@@ -2,7 +2,7 @@
   <div class="container promo__container">
     <img class="promo__pattern" src="assets/img/promo-pattern.svg" alt="" aria-hidden="true">
     <div class="promo__content">
-      <h2 class="section-title promo__title">{{ promo.title }}</h2>
+      <h2 class="section-title promo__title">{{ promo.title | safe }}</h2>
       <p class="lead promo__lead">{{ promo.lead }}</p>
       <button class="button button--lime promo__button" type="button" data-open-dialog="discount-dialog">{{ promo.button }}</button>
     </div>

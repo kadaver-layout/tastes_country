@@ -1,11 +1,11 @@
 <section class="gallery">
   <div class="container gallery__container">
     <div class="gallery__intro">
-      <h2 class="section-title gallery__title">{{ galleryIntro.title }}</h2>
+      <h2 class="section-title gallery__title"><span class="gallery__title-default">{{ galleryIntro.title }}</span><span class="gallery__title-laptop">{{ galleryIntro.titleLaptop }}</span></h2>
       <p class="lead gallery__lead">{{ galleryIntro.lead }}</p>
       <p class="lead gallery__lead">{{ galleryIntro.lead2 }}</p>
     </div>
-    <div class="gallery__rail" data-rail data-rail-mode="slide">
+    <div class="gallery__rail" data-rail>
       <ul class="gallery__list" data-rail-track>
         {% for photo in gallery.photos %}
         <li class="gallery__item">

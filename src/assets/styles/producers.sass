@@ -5,8 +5,14 @@
   &__card
     position: relative
     height: 910px
+    border-radius: 20px
+    background: $cream
+    overflow: hidden
     @media ($tablet)
       height: auto
+      border-radius: 12px
+    @media ($mobile)
+      border-radius: 10px
   &__info
     position: absolute
     top: 105px
@@ -50,10 +56,12 @@
       position: relative
       top: 0
       left: 0
+  &__title
+    line-height: 34.2px
   &__text
     margin-top: 20px
     font-size: 24px
-    line-height: 28px
+    line-height: 27.6px
     letter-spacing: -0.02em
     color: $green-muted
     @media ($tablet)
@@ -67,14 +75,15 @@
     pointer-events: none
     @media ($tablet)
       display: none
+    // Лаймовая «В» — справа сверху, красная «Заботимся» — слева снизу (по макету).
     &--lime
-      top: 501px
-      left: -65px
-      width: 160px
-    &--red
       top: 83px
       left: 581px
       width: 170px
+    &--red
+      top: 501px
+      left: -65px
+      width: 160px
   &__nav
     position: absolute
     top: 673px
@@ -97,21 +106,20 @@
     height: 910px
     min-width: 0
     overflow: hidden
+    touch-action: pan-y pinch-zoom
     @media ($tablet)
       position: relative
       width: auto
       height: auto
+  // Track без нативного скролла: transform-позиция от JS (slide-режим).
   &__photos
     display: flex
     height: 100%
-    overflow-x: auto
-    scroll-snap-type: x mandatory
-    scrollbar-width: none
-    &::-webkit-scrollbar
-      display: none
+    will-change: transform
   &__photo
     flex: 0 0 100%
-    scroll-snap-align: start
+    &.is-enter
+      animation: rise-in 0.4s ease backwards
     img
       width: 100%
       height: 100%

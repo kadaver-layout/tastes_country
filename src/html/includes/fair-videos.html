@@ -10,7 +10,7 @@
       <li class="videos__item">
         <button class="video-card" type="button" data-reel-toggle aria-label="Видео о ярмарке{% if card.city %}, {{ card.city }}{% endif %}">
           <video class="video-card__media" src="assets/video/fair-reel.mp4" poster="assets/img/{{ card.poster }}.webp" muted loop playsinline preload="metadata" tabindex="-1"></video>
-          <span class="chip video-card__city">{{ card.city | default(videos.unknownCity) }}</span>
+          <span class="chip video-card__city">{{ card.city or videos.unknownCity }}</span>
         </button>
       </li>
       {% endfor %}

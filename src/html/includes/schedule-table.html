@@ -1,37 +1,22 @@
 <section class="schedule">
   <div class="container">
     <h2 class="section-title schedule__title">{{ schedule.title }}</h2>
-    <div class="schedule__card">
+    <div class="schedule__card" id="schedule-overview">
       <div class="schedule__header">
-        <p class="schedule__month">{{ schedule.month }}</p>
-        <ul class="schedule__days">
-          {% for day in schedule.days %}
-          <li class="schedule__day{% if day == schedule.today %} schedule__day--today{% endif %}">{{ day }}</li>
-          {% endfor %}
-        </ul>
+        <p class="schedule__month" data-week-label></p>
+        <ul class="schedule__days" data-week-days></ul>
       </div>
-      {% set todayIndex = schedule.days.indexOf(schedule.today) %}
-      <ul class="schedule__rows" style="--today: {{ todayIndex }}">
-        {% for row in schedule.rows %}
-        {% set fromIndex = row.from - schedule.days[0] %}
-        {% set toIndex = row.to - schedule.days[0] %}
-        <li class="schedule__row">
-          <div class="schedule__fair">
-            <h3 class="schedule__city">{{ row.city }}</h3>
-            <p class="schedule__address">{{ row.address }}</p>
-          </div>
-          <p class="schedule__bar" style="grid-column: {{ fromIndex + 2 }} / {% if toIndex > 6 %}-1{% else %}{{ toIndex + 3 }}{% endif %}">{{ row.dates }}</p>
-        </li>
-        {% endfor %}
-      </ul>
+      <ul class="schedule__rows" data-week-rows style="--today: -1"></ul>
       <div class="rail-nav schedule__nav">
-        <button class="rail-button" type="button" data-week-prev aria-label="Предыдущая неделя" disabled>
+        <button class="rail-button" type="button" data-week-prev aria-label="Предыдущая неделя" aria-controls="schedule-overview" disabled>
           <img src="assets/img/arrow-left.svg" alt="">
         </button>
-        <button class="rail-button" type="button" data-week-next aria-label="Следующая неделя">
+        <button class="rail-button" type="button" data-week-next aria-label="Следующая неделя" aria-controls="schedule-overview">
           <img src="assets/img/arrow-right.svg" alt="">
         </button>
       </div>
+      <p class="visually-hidden" role="status" aria-live="polite" data-week-status></p>
     </div>
   </div>
+  <script type="application/json" id="schedule-weeks">{{ schedule.weeks | dump | safe }}</script>
 </section>

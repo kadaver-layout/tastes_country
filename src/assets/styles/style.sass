@@ -172,6 +172,11 @@ img
   &:focus-visible
     outline: 2px solid $green-pale
     outline-offset: 2px
+  &--orange
+    background: $orange
+    color: $cream
+  &--orange:hover:not(:disabled)
+    background: $green-nav
   &--lime:disabled
     background: $disabled
     color: $cream
@@ -196,9 +201,13 @@ img
   @media ($mobile)
     width: 40px
     height: 40px
+  // Иконка в макете занимает кнопку почти целиком (глиф 20px внутри 60).
   img
-    width: 20px
-    height: 20px
+    width: 60px
+    height: 60px
+    @media ($mobile)
+      width: 32px
+      height: 32px
   &:hover:not(:disabled)
     background: $green-nav
   &:focus-visible
@@ -211,6 +220,10 @@ img
   display: flex
   align-items: center
   gap: 24px
+
+// Видео запускаются только по нажатию: карточка работает кнопкой воспроизведения.
+[data-reel-toggle]
+  cursor: pointer
 
 // Светлая плашка поверх фото (статус ярмарки, город видео).
 .chip
@@ -257,10 +270,53 @@ img
   &:focus
     top: 16px
 
+// Ниже 360px (меньше минимальной композиции макета) длинные слова заголовков
+// ломают минимальную ширину — разрешаем перенос и горизонтальный скролл,
+// чтобы clip не прятал контент на экзотических узких экранах.
+@media (max-width: 359.9px)
+  body
+    overflow-x: auto
+  .hero__title, .page-hero__title, .section-title
+    overflow-wrap: anywhere
+
+// Лёгкая анимация: появление модалок, «стаггер» фото hero, отклик карточек.
+@keyframes dialog-in
+  from
+    opacity: 0
+    transform: scale(0.96)
+
+dialog[open]
+  animation: dialog-in 0.24s ease
+
+@keyframes rise-in
+  from
+    opacity: 0
+    transform: translateY(24px)
+
+.hero__photo
+  animation: rise-in 0.5s ease backwards
+  &:nth-child(2)
+    animation-delay: 0.08s
+  &:nth-child(3)
+    animation-delay: 0.16s
+  &:nth-child(4)
+    animation-delay: 0.24s
+
+.video-card video
+  transition: transform $anim
+
+@media (hover: hover)
+  .video-card:hover video
+    transform: scale(1.03)
+  .benefit-card:hover
+    transform: rotate(0deg) translateY(-6px)
+
 @media (prefers-reduced-motion: reduce)
   *, *::before, *::after
     scroll-behavior: auto !important
     transition-duration: 0.01ms !important
+    animation-duration: 0.01ms !important
+    animation-delay: 0ms !important
 
 @media (hover: hover)
   a:hover
